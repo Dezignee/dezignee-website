@@ -3,33 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Dezignee - Professional Email Design Editor. Create beautiful, responsive email templates with ease.">
-    <title>Dezignee - Professional Email Design Editor</title>
-    
+    <meta name="description" content="Dezignee - AI-First Email Builder with MCP. Create professional email templates instantly with AI, then fine-tune with our visual editor. Perfect for agencies, SaaS companies, and freelancers.">
+    <title>Dezignee - AI-First Email Builder with MCP</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/images/dezignee_logo.png">
+
     <!-- Link to external stylesheet -->
     <link rel="stylesheet" href="assets/css/style.css">
+    <!-- Using system fonts for brand consistency -->
 </head>
 <body>
     <!-- Navigation Header -->
     <header class="header">
         <nav class="nav container">
             <div class="nav-brand">
-                <a href="#" class="logo">Dezignee</a>
+                <a href="#" class="logo">
+                    <img src="assets/images/dezignee_logo.png" alt="Dezignee" class="logo-image">
+                </a>
             </div>
             <ul class="nav-menu" id="navMenu">
-                <li class="nav-item">
-                    <a href="#home" class="nav-link">Home</a>
-                </li>
                 <li class="nav-item">
                     <a href="#features" class="nav-link">Features</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#about" class="nav-link">About</a>
+                    <a href="#how-it-works" class="nav-link">How It Works</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#contact" class="nav-link">Contact</a>
+                    <a href="#for-teams" class="nav-link">For Teams</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#pricing" class="nav-link">Pricing</a>
                 </li>
             </ul>
+            <div class="nav-actions">
+                <a href="#login" class="btn btn-login">Login</a>
+                <a href="#signup" class="btn btn-primary">Start Free</a>
+            </div>
             <div class="nav-toggle" id="navToggle">
                 <span class="bar"></span>
                 <span class="bar"></span>
@@ -38,141 +48,471 @@
         </nav>
     </header>
 
-    <!-- Hero Section -->
+    <!-- Hero Section - AI First -->
     <section id="home" class="hero">
         <div class="container">
             <div class="hero-content">
-                <h1 class="hero-title">Design Beautiful Emails <span class="highlight">Effortlessly</span></h1>
+                <div class="hero-badge">
+                    <span class="badge-icon">✨</span>
+                    <span>AI-First Email Builder</span>
+                </div>
+                <h1 class="hero-title">
+                    Create Professional Emails with <span class="gradient-text">AI in Seconds</span>
+                </h1>
                 <p class="hero-description">
-                    Create stunning, responsive email templates with our intuitive drag-and-drop editor.
-                    No coding required. Professional results in minutes.
+                    No coding, no design skills needed. Just describe what you want, and Dezignee's AI creates beautiful, responsive email templates instantly. Then fine-tune with our visual editor.
                 </p>
                 <div class="hero-buttons">
-                    <a href="#features" class="btn btn-primary">Get Started</a>
-                    <a href="#about" class="btn btn-secondary">Learn More</a>
+                    <a href="#signup" class="btn btn-primary btn-large">
+                        <span>Start Creating Free</span>
+                        <span class="btn-arrow">→</span>
+                    </a>
+                    <a href="#demo" class="btn btn-secondary btn-large">Watch Demo</a>
+                </div>
+                <div class="hero-features">
+                    <div class="hero-feature-item">
+                        <span class="check-icon-small">✓</span>
+                        <span>No coding required</span>
+                    </div>
+                    <div class="hero-feature-item">
+                        <span class="check-icon-small">✓</span>
+                        <span>MCP powered</span>
+                    </div>
+                    <div class="hero-feature-item">
+                        <span class="check-icon-small">✓</span>
+                        <span>Visual editor included</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="ai-interface-preview">
+                    <div class="interface-header">
+                        <div class="interface-tabs">
+                            <div class="tab active">AI Chat</div>
+                            <div class="tab">Editor</div>
+                        </div>
+                    </div>
+                    <div class="chat-interface">
+                        <div class="chat-message user">
+                            <div class="message-avatar">U</div>
+                            <div class="message-content">
+                                Create a welcome email for new SaaS customers
+                            </div>
+                        </div>
+                        <div class="chat-message ai">
+                            <div class="message-avatar ai-avatar">AI</div>
+                            <div class="message-content">
+                                <div class="ai-thinking">
+                                    <span></span><span></span><span></span>
+                                </div>
+                                Generating your email template...
+                            </div>
+                        </div>
+                        <div class="email-preview-result">
+                            <div class="preview-header">Email Preview</div>
+                            <div class="preview-content">
+                                <div class="preview-placeholder"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Features Section -->
-    <section id="features" class="features">
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="workflow-section">
         <div class="container">
-            <h2 class="section-title">Everything You Need to Create Amazing Emails</h2>
-            <p class="section-subtitle">Powerful features designed for both beginners and professionals</p>
-            
+            <div class="section-header">
+                <h2 class="section-title">How It Works</h2>
+                <p class="section-subtitle">From idea to professional email in 4 simple steps</p>
+            </div>
+            <div class="workflow-steps">
+                <div class="workflow-step">
+                    <div class="step-number">1</div>
+                    <div class="step-icon">💬</div>
+                    <h3 class="step-title">Describe Your Email</h3>
+                    <p class="step-description">
+                        Simply type what you need. Our AI understands your requirements and creates the perfect email template.
+                    </p>
+                    <div class="step-example">
+                        <div class="example-prompt">
+                            "Create a product launch email for a SaaS tool with a modern design"
+                        </div>
+                    </div>
+                </div>
+                <div class="workflow-arrow">→</div>
+                <div class="workflow-step">
+                    <div class="step-number">2</div>
+                    <div class="step-icon">🤖</div>
+                    <h3 class="step-title">AI Generates Instantly</h3>
+                    <p class="step-description">
+                        Powered by MCP (Model Context Protocol), our AI creates responsive, professional email templates in seconds.
+                    </p>
+                </div>
+                <div class="workflow-arrow">→</div>
+                <div class="workflow-step">
+                    <div class="step-number">3</div>
+                    <div class="step-icon">✏️</div>
+                    <h3 class="step-title">Fine-Tune with Editor</h3>
+                    <p class="step-description">
+                        Use our visual editor to customize colors, fonts, layout, and content. No web development knowledge needed.
+                    </p>
+                </div>
+                <div class="workflow-arrow">→</div>
+                <div class="workflow-step">
+                    <div class="step-number">4</div>
+                    <div class="step-icon">💾</div>
+                    <h3 class="step-title">Download or Save for Later</h3>
+                    <p class="step-description">
+                        Download clean, responsive HTML or save it to your library to reuse, edit, or send anytime.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MCP Integration Section -->
+    <section class="mcp-section mcp-section-centered">
+        <div class="container">
+            <div class="mcp-content">
+                <div class="mcp-text">
+                    <h2 class="section-title">Built on Model Context Protocol</h2>
+                    <p class="section-description">
+                        Dezignee leverages MCP to provide intelligent, context-aware email generation. Our AI understands your brand, style preferences, and email best practices to create templates that work perfectly for your needs.
+                    </p>
+                    <ul class="mcp-features">
+                        <li>
+                            <span class="check-icon">✓</span>
+                            <span>Context-aware generation</span>
+                        </li>
+                        <li>
+                            <span class="check-icon">✓</span>
+                            <span>Brand consistency</span>
+                        </li>
+                        <li>
+                            <span class="check-icon">✓</span>
+                            <span>Email best practices built-in</span>
+                        </li>
+                        <li>
+                            <span class="check-icon">✓</span>
+                            <span>Responsive by default</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Adaptive AI Section -->
+    <section class="mcp-section mcp-section-centered">
+        <div class="container">
+            <div class="mcp-content">
+                <div class="mcp-text">
+                    <h2 class="section-title">Agentic, Expertly Trained AI</h2>
+                    <p class="section-description">
+                        Dezignee uses an agentic AI model trained on 50,000+ high-performing email templates to make template creation intuitive, consistent, and fast.
+                    </p>
+                    <ul class="mcp-features">
+                        <li>
+                            <span class="check-icon">✓</span>
+                            <span>Agentic, decision-making AI model</span>
+                        </li>
+                        <li>
+                            <span class="check-icon">✓</span>
+                            <span>Trained on 50,000+ proven email templates</span>
+                        </li>
+                        <li>
+                            <span class="check-icon">✓</span>
+                            <span>Learns patterns across industries and use cases</span>
+                        </li>
+                        <li>
+                            <span class="check-icon">✓</span>
+                            <span>Responsive and production-ready by default</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Visual Editor Section -->
+    <section id="features" class="editor-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Visual Editor Built-In</h2>
+                <p class="section-subtitle">Tweak your design after AI generation - no coding required</p>
+            </div>
+            <div class="editor-showcase">
+                <div class="editor-demo">
+                    <div class="editor-interface">
+                        <div class="editor-sidebar">
+                            <div class="sidebar-section">
+                                <div class="sidebar-title">Elements</div>
+                                <div class="sidebar-items">
+                                    <div class="sidebar-item">Text</div>
+                                    <div class="sidebar-item">Image</div>
+                                    <div class="sidebar-item">Button</div>
+                                    <div class="sidebar-item">Spacer</div>
+                                </div>
+                            </div>
+                            <div class="sidebar-section">
+                                <div class="sidebar-title">Styles</div>
+                                <div class="sidebar-items">
+                                    <div class="sidebar-item">Colors</div>
+                                    <div class="sidebar-item">Fonts</div>
+                                    <div class="sidebar-item">Spacing</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="editor-main">
+                            <div class="editor-toolbar-top">
+                                <div class="toolbar-item">Desktop</div>
+                                <div class="toolbar-item active">Mobile</div>
+                                <div class="toolbar-item">Preview</div>
+                            </div>
+                            <div class="editor-canvas-area">
+                                <div class="canvas-email">
+                                    <div class="email-block"></div>
+                                    <div class="email-block"></div>
+                                    <div class="email-block"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="editor-features">
+                    <div class="feature-card">
+                        <div class="feature-icon">🎨</div>
+                        <h3 class="feature-title">Drag & Drop</h3>
+                        <p class="feature-text">Easily rearrange elements with simple drag and drop</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎯</div>
+                        <h3 class="feature-title">Live Preview</h3>
+                        <p class="feature-text">See changes instantly across desktop and mobile views</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <h3 class="feature-title">No Code Needed</h3>
+                        <p class="feature-text">Everything is visual - no HTML, CSS, or JavaScript knowledge required</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Target Audience Sections -->
+    <section id="for-teams" class="audience-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Perfect For</h2>
+                <p class="section-subtitle">Built for teams that need professional emails fast</p>
+            </div>
+            <div class="audience-grid">
+                <div class="audience-card">
+                    <div class="audience-icon">🏢</div>
+                    <h3 class="audience-title">Agencies</h3>
+                    <p class="audience-description">
+                        Create client emails in minutes. No need to hire designers or developers. Scale your email campaigns effortlessly.
+                    </p>
+                    <ul class="audience-benefits">
+                        <li>Client-ready templates</li>
+                        <li>Brand customization</li>
+                        <li>Team collaboration</li>
+                    </ul>
+                </div>
+                <div class="audience-card">
+                    <div class="audience-icon">🚀</div>
+                    <h3 class="audience-title">SaaS Companies</h3>
+                    <p class="audience-description">
+                        Automate your email marketing. Create onboarding emails, product updates, and newsletters without technical overhead.
+                    </p>
+                    <ul class="audience-benefits">
+                        <li>Onboarding emails</li>
+                        <li>Product announcements</li>
+                        <li>Newsletter templates</li>
+                    </ul>
+                </div>
+                <div class="audience-card">
+                    <div class="audience-icon">👤</div>
+                    <h3 class="audience-title">Freelancers</h3>
+                    <p class="audience-description">
+                        Professional emails without the price tag. Create stunning templates for your clients without design skills.
+                    </p>
+                    <ul class="audience-benefits">
+                        <li>Affordable pricing</li>
+                        <li>Quick turnaround</li>
+                        <li>Export ready</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Grid -->
+    <section class="features-grid-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Everything You Need</h2>
+                <p class="section-subtitle">All the features to create professional emails effortlessly</p>
+            </div>
             <div class="features-grid">
-                <!-- Feature 1 -->
-                <div class="feature-card">
-                    <div class="feature-icon">🎨</div>
-                    <h3 class="feature-title">Drag & Drop</h3>
-                    <p class="feature-description">
-                        Intuitive interface that lets you build emails visually. No technical knowledge required.
-                    </p>
+                <div class="feature-item">
+                    <div class="feature-icon-large">🤖</div>
+                    <h3 class="feature-title">AI-Powered Generation</h3>
+                    <p class="feature-description">Describe your email and get a professional template in seconds</p>
                 </div>
-                
-                <!-- Feature 2 -->
-                <div class="feature-card">
-                    <div class="feature-icon">⚡</div>
-                    <h3 class="feature-title">Fast & Responsive</h3>
-                    <p class="feature-description">
-                        Create emails that look perfect on any device. Fully responsive templates out of the box.
-                    </p>
+                <div class="feature-item">
+                    <div class="feature-icon-large">✏️</div>
+                    <h3 class="feature-title">Visual Editor</h3>
+                    <p class="feature-description">Fine-tune every detail with our intuitive drag-and-drop editor</p>
                 </div>
-                
-                <!-- Feature 3 -->
-                <div class="feature-card">
-                    <div class="feature-icon">🎯</div>
-                    <h3 class="feature-title">Customizable</h3>
-                    <p class="feature-description">
-                        Full control over colors, fonts, spacing, and layout. Make it truly yours.
-                    </p>
+                <div class="feature-item">
+                    <div class="feature-icon-large">📱</div>
+                    <h3 class="feature-title">Responsive Design</h3>
+                    <p class="feature-description">All templates are mobile-ready and tested across devices</p>
                 </div>
-                
-                <!-- Feature 4 -->
-                <div class="feature-card">
-                    <div class="feature-icon">📱</div>
-                    <h3 class="feature-title">Mobile-First</h3>
-                    <p class="feature-description">
-                        All templates are optimized for mobile devices with responsive design principles.
-                    </p>
+                <div class="feature-item">
+                    <div class="feature-icon-large">🎨</div>
+                    <h3 class="feature-title">Brand Customization</h3>
+                    <p class="feature-description">Match your brand colors, fonts, and style effortlessly</p>
                 </div>
-                
-                <!-- Feature 5 -->
-                <div class="feature-card">
-                    <div class="feature-icon">🚀</div>
+                <div class="feature-item">
+                    <div class="feature-icon-large">📤</div>
                     <h3 class="feature-title">Export Ready</h3>
-                    <p class="feature-description">
-                        Export your designs as HTML, ready to use in any email platform or service.
-                    </p>
+                    <p class="feature-description">Export as HTML/CSS for any email platform or service</p>
                 </div>
-                
-                <!-- Feature 6 -->
-                <div class="feature-card">
-                    <div class="feature-icon">✨</div>
-                    <h3 class="feature-title">Real-time Preview</h3>
-                    <p class="feature-description">
-                        See your changes instantly as you design. No need to refresh or rebuild.
-                    </p>
+                <div class="feature-item">
+                    <div class="feature-icon-large">⚡</div>
+                    <h3 class="feature-title">MCP Integration</h3>
+                    <p class="feature-description">Powered by Model Context Protocol for intelligent generation</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- About Section -->
-    <section id="about" class="about">
+    <!-- Pricing Section -->
+    <section id="pricing" class="pricing-section">
         <div class="container">
-            <div class="about-content">
-                <h2 class="section-title">About Dezignee</h2>
-                <p class="about-text">
-                    Dezignee is a modern email design editor built for creators, marketers, and developers 
-                    who want to create beautiful, responsive email templates without the complexity of 
-                    traditional design tools.
-                </p>
-                <p class="about-text">
-                    We believe that creating beautiful emails shouldn't require extensive design experience 
-                    or coding knowledge. Dezignee empowers everyone to create professional email templates 
-                    with an intuitive, visual editor.
-                </p>
+            <div class="section-header">
+                <h2 class="section-title">Simple Pricing</h2>
+                <p class="section-subtitle">Choose the plan that works for you</p>
+            </div>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3 class="pricing-name">Starter</h3>
+                        <div class="pricing-price">
+                            <span class="price-amount">$0</span>
+                            <span class="price-period">/month</span>
+                        </div>
+                    </div>
+                    <p class="pricing-description">Perfect for trying out Dezignee</p>
+                    <ul class="pricing-features">
+                        <li>10 AI-generated emails/month</li>
+                        <li>Basic editor access</li>
+                        <li>Standard templates</li>
+                        <li>Email support</li>
+                    </ul>
+                    <a href="#signup" class="btn btn-outline btn-block">Get Started</a>
+                </div>
+                <div class="pricing-card featured">
+                    <div class="pricing-badge">Most Popular</div>
+                    <div class="pricing-header">
+                        <h3 class="pricing-name">Professional</h3>
+                        <div class="pricing-price">
+                            <span class="price-amount">$29</span>
+                            <span class="price-period">/month</span>
+                        </div>
+                    </div>
+                    <p class="pricing-description">For agencies and growing teams</p>
+                    <ul class="pricing-features">
+                        <li>Unlimited AI generations</li>
+                        <li>Full editor access</li>
+                        <li>Brand customization</li>
+                        <li>Team collaboration</li>
+                        <li>Priority support</li>
+                        <li>Export to HTML/CSS</li>
+                    </ul>
+                    <a href="#signup" class="btn btn-primary btn-block">Start Free Trial</a>
+                </div>
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3 class="pricing-name">Enterprise</h3>
+                        <div class="pricing-price">
+                            <span class="price-amount">$99</span>
+                            <span class="price-period">/month</span>
+                        </div>
+                    </div>
+                    <p class="pricing-description">For organizations needing advanced features</p>
+                    <ul class="pricing-features">
+                        <li>Everything in Professional</li>
+                        <li>Advanced MCP features</li>
+                        <li>Custom integrations</li>
+                        <li>Dedicated support</li>
+                        <li>White-label options</li>
+                        <li>SLA guarantee</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-outline btn-block">Contact Sales</a>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- CTA Section -->
-    <section class="cta">
+    <section class="cta-section">
         <div class="container">
             <div class="cta-content">
-                <h2 class="cta-title">Ready to Get Started?</h2>
+                <h2 class="cta-title">Ready to Create Amazing Emails?</h2>
                 <p class="cta-description">
-                    Start creating beautiful emails today. No credit card required.
+                    Join thousands of agencies, SaaS companies, and freelancers creating professional emails with AI. No credit card required.
                 </p>
-                <a href="#features" class="btn btn-primary btn-large">Launch Editor</a>
+                <div class="cta-buttons">
+                    <a href="#signup" class="btn btn-primary btn-large">Start Creating Free</a>
+                    <a href="#demo" class="btn btn-secondary btn-large">Watch Demo</a>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer id="contact" class="footer">
+    <footer class="footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3 class="footer-title">Dezignee</h3>
+                    <div class="footer-logo">
+                        <img src="assets/images/dezignee_logo.png" alt="Dezignee" class="logo-image">
+                    </div>
                     <p class="footer-text">
-                        Professional email design editor for creating beautiful, responsive email templates.
+                        AI-first email builder with MCP. Create professional emails in seconds, no coding required.
                     </p>
                 </div>
                 <div class="footer-section">
                     <h4 class="footer-heading">Product</h4>
                     <ul class="footer-links">
                         <li><a href="#features">Features</a></li>
-                        <li><a href="#about">About</a></li>
+                        <li><a href="#how-it-works">How It Works</a></li>
+                        <li><a href="#pricing">Pricing</a></li>
+                        <li><a href="#for-teams">For Teams</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
                     <h4 class="footer-heading">Resources</h4>
                     <ul class="footer-links">
-                        <li><a href="#">Documentation</a></li>
-                        <li><a href="#">Support</a></li>
+                        <li><a href="#docs">Documentation</a></li>
+                        <li><a href="#tutorials">Tutorials</a></li>
+                        <li><a href="#blog">Blog</a></li>
+                        <li><a href="#support">Support</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4 class="footer-heading">Company</h4>
+                    <ul class="footer-links">
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#careers">Careers</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="#privacy">Privacy</a></li>
                     </ul>
                 </div>
             </div>
@@ -182,7 +522,7 @@
         </div>
     </footer>
 
-    <!-- JavaScript for mobile menu and dynamic year -->
+    <!-- JavaScript -->
     <script src="assets/js/main.js"></script>
 </body>
 </html>
