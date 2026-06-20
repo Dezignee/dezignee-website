@@ -222,15 +222,16 @@ export default function Home() {
                 <span className="ml-1.5 font-mono text-xs text-[#A8A296]">claude_desktop_config.json</span>
               </div>
               <pre className="overflow-x-auto px-4 py-4 font-mono text-[12.5px] leading-[1.7] text-[#E7E3D9]">
-{`// Connect your agent to Dezignee over MCP
-{
+{`{
   "mcpServers": {
-    "dezignee": {
-      "command": "npx",
-      "args": ["-y", "@dezignee/mcp-users"],
-      "env": {
-        "DEZIGNEE_API_KEY": "dzg_api_..."
-      }
+    "dezignee-users": {
+      "command": "python",
+      "args": [
+        "/path/to/dezignee-backend/scripts/mcp-users-server.py",
+        "--workspace-id=your-workspace-id",
+        "--api-key=dzg_api_your-api-key",
+        "--api-url=https://api.dezignee.com"
+      ]
     }
   }
 }`}

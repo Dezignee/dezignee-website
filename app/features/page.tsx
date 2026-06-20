@@ -1,437 +1,334 @@
-import Link from "next/link"
 import type { Metadata } from "next"
-import type { ReactNode } from "react"
+import Link from "next/link"
 import {
-  BotMessageSquare,
+  ArrowRight,
+  Boxes,
   Braces,
+  FileCode2,
+  GitBranch,
+  Heading,
+  Image as ImageIcon,
   LayoutPanelTop,
+  Minus,
+  MousePointerSquareDashed,
   Sparkles,
+  SquareStack,
+  Type,
+  Webhook,
   Workflow,
 } from "lucide-react"
 
-import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import { Reveal } from "@/components/reveal"
 import { CodeBlock } from "@/components/code-block"
-import { FeatureCard } from "@/components/sections/feature-card"
-import { Hero } from "@/components/sections/hero"
+import { PageHeader } from "@/components/sections/page-header"
 
 export const metadata: Metadata = {
-  title: "Features",
+  title: "Product",
   description:
-    "Deep dive into Dezignee’s AI chat, visual editor, sequences, and MCP integration for embeddable and dashboard workflows.",
-  alternates: {
-    canonical: "/features",
-  },
+    "A real block editor under the AI: chat to draft emails and sequences, refine every block by hand, personalize with merge tags, and export email-safe HTML.",
+  alternates: { canonical: "/features" },
 }
 
 function SectionHeading({
   eyebrow,
   title,
   description,
+  align = "center",
 }: {
   eyebrow?: string
-  title: string
-  description?: string
+  title: React.ReactNode
+  description?: React.ReactNode
+  align?: "center" | "left"
 }) {
   return (
-    <header className="mx-auto max-w-2xl text-center">
+    <header className={align === "center" ? "mx-auto max-w-2xl text-center" : "max-w-xl"}>
       {eyebrow ? (
-        <p className="text-xs font-semibold uppercase tracking-wide text-primary">
+        <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.04em] text-muted-foreground">
+          <span className="size-1.5 rounded-full bg-terracotta" aria-hidden="true" />
           {eyebrow}
         </p>
       ) : null}
-      <h2 className="mt-3 text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
+      <h2 className="font-display mt-3.5 text-balance text-[34px] leading-[1.12] text-foreground sm:text-[38px]">
         {title}
       </h2>
       {description ? (
-        <p className="mt-4 text-pretty text-base leading-relaxed text-muted-foreground sm:text-lg">
-          {description}
-        </p>
+        <p className="mt-4 text-pretty text-lg leading-relaxed text-muted-foreground">{description}</p>
       ) : null}
     </header>
   )
 }
 
-function FeatureSection({
+/* alternating image/text deep-dive split */
+function Split({
   id,
-  icon,
+  icon: Icon,
+  eyebrow,
   title,
-  description,
+  body,
   bullets,
-  codeTitle,
-  codeSnippets,
-  ctas,
+  media,
   inverted = false,
 }: {
   id: string
-  icon: ReactNode
+  icon: React.ElementType
+  eyebrow: string
   title: string
-  description: string
+  body: string
   bullets: string[]
-  codeTitle: string
-  codeSnippets: { label: string; language: string; code: string }[]
-  ctas: { href: string; label: string; variant?: "default" | "outline" }[]
+  media: React.ReactNode
   inverted?: boolean
 }) {
   return (
-    <section id={id} className="border-t bg-background scroll-mt-24">
-      <div className="container py-16 sm:py-20">
-        <div
-          className={[
-            "grid gap-10 lg:grid-cols-2 lg:items-start",
-            inverted ? "lg:[&>*:first-child]:order-2" : "",
-          ].join(" ")}
-        >
-          <div className="space-y-6">
-            <div className="flex items-center gap-3">
-              <div className="flex size-11 items-center justify-center rounded-xl border bg-background">
-                <span className="text-primary">{icon}</span>
-              </div>
-              <Badge variant="secondary" className="border-primary/20">
-                Feature deep dive
-              </Badge>
-            </div>
-
-            <div className="space-y-3">
-              <h3 className="text-balance text-2xl font-semibold tracking-tight sm:text-3xl">
-                {title}
-              </h3>
-              <p className="text-pretty text-base leading-relaxed text-muted-foreground sm:text-lg">
-                {description}
-              </p>
-            </div>
-
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              {bullets.map((item) => (
-                <li key={item} className="flex gap-2">
-                  <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-primary" />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-              {ctas.map((cta) => (
-                <Button
-                  key={cta.href}
-                  asChild
-                  variant={cta.variant ?? "default"}
-                >
-                  <Link href={cta.href}>{cta.label}</Link>
-                </Button>
-              ))}
-            </div>
-          </div>
-
-          <div className="space-y-4">
-            <CodeBlock title={codeTitle} snippets={codeSnippets} />
-            <div className="rounded-2xl border bg-muted/10 p-5">
-              <p className="text-sm font-medium">Tip</p>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                Use the same workflow whether you’re in the dashboard or embedding
-                Dezignee: draft with AI, refine visually, then export HTML.
-              </p>
-            </div>
-          </div>
+    <section id={id} className="scroll-mt-20 border-t border-border">
+      <div className="mx-auto grid w-4/5 max-w-[1040px] items-center gap-12 py-20 lg:grid-cols-2">
+        <div className={inverted ? "lg:order-2" : ""}>
+          <span className="inline-flex size-11 items-center justify-center rounded-xl border border-terracotta/30 bg-terracotta-tint text-terracotta">
+            <Icon className="size-5" />
+          </span>
+          <p className="mt-5 text-xs font-semibold uppercase tracking-[0.04em] text-muted-foreground">{eyebrow}</p>
+          <h3 className="font-display mt-2 text-balance text-[28px] leading-[1.14] text-foreground">{title}</h3>
+          <p className="mt-3 text-pretty text-[15px] leading-relaxed text-muted-foreground">{body}</p>
+          <ul className="mt-5 space-y-2.5">
+            {bullets.map((b) => (
+              <li key={b} className="flex gap-2.5 text-[15px] text-foreground/80">
+                <span className="mt-2 size-1.5 shrink-0 rounded-full bg-terracotta" aria-hidden="true" />
+                <span className="leading-snug">{b}</span>
+              </li>
+            ))}
+          </ul>
         </div>
+        <Reveal className={inverted ? "lg:order-1" : ""} delay={0.05}>
+          {media}
+        </Reveal>
       </div>
     </section>
   )
 }
 
+/* --- small mock surfaces (warm DS palette, pure CSS) --- */
+function MockFrame({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div className="overflow-hidden rounded-2xl border border-input bg-card shadow-[0_12px_28px_rgba(40,34,25,0.1)]">
+      <div className="flex items-center gap-2 border-b border-border bg-secondary px-4 py-2.5">
+        <span className="size-2.5 rounded-full bg-input" />
+        <span className="size-2.5 rounded-full bg-input" />
+        <span className="size-2.5 rounded-full bg-input" />
+        <span className="ml-1.5 font-mono text-xs text-muted-foreground">{label}</span>
+      </div>
+      <div className="p-5">{children}</div>
+    </div>
+  )
+}
+
+const BLOCK_TYPES = [
+  { icon: Heading, label: "Heading" },
+  { icon: Type, label: "Text" },
+  { icon: ImageIcon, label: "Image" },
+  { icon: MousePointerSquareDashed, label: "Button" },
+  { icon: Minus, label: "Divider" },
+  { icon: SquareStack, label: "Spacer" },
+]
+
+const ALSO = [
+  { icon: ImageIcon, t: "Asset library", d: "Upload to Dezignee-hosted storage or wire your own S3 bucket via an asset adapter." },
+  { icon: GitBranch, t: "Version history", d: "Every command is versioned. Roll back a template or compare against an earlier draft." },
+  { icon: Boxes, t: "Workspaces", d: "Multi-tenant by design — separate brands, teams, and API keys per workspace." },
+  { icon: Webhook, t: "Webhooks", d: "HMAC-signed events for exports and changes, so your pipeline stays in sync." },
+]
+
 export default function FeaturesPage() {
   return (
     <>
-      <Hero
-        badge="Features"
-        title={
-          <>
-            AI-first creation,{" "}
-            <span className="bg-gradient-to-r from-primary via-cyan-400 to-primary bg-clip-text text-transparent">
-              visual refinement
-            </span>
-            , and embeddable workflows.
-          </>
-        }
-        description={
-          <>
-            Dezignee is built for two modes—dashboard and embedded SDK—but one
-            consistent experience: chat to draft, edit visually, generate
-            sequences, and export production-ready HTML.
-          </>
-        }
-        primaryCta={{ href: "/pricing", label: "Get Started" }}
-        secondaryCta={{ href: "/docs", label: "SDK Quick Start" }}
-      >
-        <div className="flex flex-wrap gap-2">
-          {[
-            { href: "#ai-chat", label: "AI Chat" },
-            { href: "#visual-editor", label: "Visual Editor" },
-            { href: "#sequences", label: "Sequences" },
-            { href: "#mcp", label: "MCP Integration" },
-          ].map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              className="rounded-full border bg-background/60 px-3 py-1 text-xs text-muted-foreground hover:text-foreground"
-            >
-              {item.label}
-            </a>
-          ))}
-        </div>
-      </Hero>
+      <PageHeader
+        eyebrow="Product"
+        title={<>A real editor under the AI.</>}
+        description="Chat gets you a strong first draft in seconds. Then a full block editor lets you shape every pixel — and ship HTML that holds up in real inboxes."
+        ctas={[
+          { href: "/pricing", label: "Start free" },
+          { href: "/docs", label: "Read the docs", variant: "outline" },
+        ]}
+        anchors={[
+          { href: "#ai", label: "AI & sequences" },
+          { href: "#editor", label: "Block editor" },
+          { href: "#merge", label: "Merge tags" },
+          { href: "#export", label: "Email-safe export" },
+        ]}
+      />
 
-      <section className="border-t bg-background">
-        <div className="container py-16 sm:py-20">
-          <SectionHeading
-            eyebrow="At a glance"
-            title="A feature set designed for speed and control."
-            description="Use AI to get to a strong first draft fast, then tweak every detail in a visual editor and ship clean HTML—manually or via SDK."
+      {/* AI & sequences */}
+      <Split
+        id="ai"
+        icon={Sparkles}
+        eyebrow="AI & sequences"
+        title="Draft a whole sequence, not just one email"
+        body="Describe the goal, audience, and voice. The assistant streams back a structured draft — real blocks you can edit — and can plan multi-step onboarding and lifecycle flows in one pass."
+        bullets={[
+          "Streaming responses over server-sent events — watch the draft build.",
+          "Prompt-to-template, plus copy, layout, and style suggestions on demand.",
+          "Import a brand from a URL or generate imagery when you need it.",
+        ]}
+        media={
+          <MockFrame label="assistant">
+            <div className="space-y-3">
+              <div className="ml-auto w-fit max-w-[80%] rounded-2xl rounded-br-sm bg-primary px-3.5 py-2 text-[13px] text-primary-foreground">
+                3-step trial onboarding, friendly and concise
+              </div>
+              <div className="w-fit max-w-[85%] rounded-2xl rounded-bl-sm border border-border bg-secondary px-3.5 py-2 text-[13px] text-foreground/80">
+                Planned 3 emails: welcome &amp; setup, first success, and a nudge before the trial ends.
+              </div>
+              <div className="flex w-fit items-center gap-2 rounded-full border border-border bg-card px-2.5 py-1 font-mono text-[11px] text-muted-foreground">
+                <span className="size-2 rounded-full bg-success" />
+                dezignee · generate_commands · done
+              </div>
+            </div>
+          </MockFrame>
+        }
+      />
+
+      {/* Block editor */}
+      <Split
+        id="editor"
+        icon={LayoutPanelTop}
+        eyebrow="Visual block editor"
+        title="Drag, select, and fine-tune every block"
+        body="Under the chat is a true visual editor on a dot-grid canvas. Build with rows and columns of typed blocks, and adjust type, color, spacing, and alignment with predictable controls."
+        bullets={[
+          "Six block types compose any layout — no raw tables or inline styles.",
+          "Select a block to edit its properties; empty columns read “No content yet”.",
+          "Manual edits and AI edits run through the same command pipeline.",
+        ]}
+        inverted
+        media={
+          <MockFrame label="welcome · canvas">
+            <div className="grid grid-cols-3 gap-2.5">
+              {BLOCK_TYPES.map((b) => {
+                const Icon = b.icon
+                return (
+                  <div
+                    key={b.label}
+                    className="flex flex-col items-center gap-2 rounded-lg border border-border bg-secondary/60 px-2 py-4 text-center"
+                  >
+                    <Icon className="size-5 text-foreground/70" />
+                    <span className="text-xs font-medium text-muted-foreground">{b.label}</span>
+                  </div>
+                )
+              })}
+            </div>
+          </MockFrame>
+        }
+      />
+
+      {/* Merge tags */}
+      <Split
+        id="merge"
+        icon={Braces}
+        eyebrow="Personalization"
+        title="Merge tags everywhere you need them"
+        body="Drop personalization tokens into subjects, body copy, and links. Preview mode swaps in sample values so you can read the email exactly as a recipient will."
+        bullets={[
+          "Use {{ first_name }}-style tokens across every text field and URL.",
+          "Preview with sample data before you export or send.",
+          "Tokens survive export untouched for your ESP to fill in.",
+        ]}
+        media={
+          <MockFrame label="text · properties">
+            <div className="space-y-3">
+              <div className="rounded-lg border border-border bg-background p-3 text-[13px] leading-relaxed text-foreground/80">
+                Hi <span className="rounded bg-terracotta-tint px-1.5 py-0.5 font-mono text-xs text-terracotta">{"{{ first_name }}"}</span>, welcome to
+                <span className="rounded bg-terracotta-tint px-1.5 py-0.5 font-mono text-xs text-terracotta">{"{{ company }}"}</span> 👋
+              </div>
+              <div className="flex items-center justify-between rounded-lg border border-border bg-secondary px-3 py-2 text-xs">
+                <span className="text-muted-foreground">Preview values</span>
+                <span className="font-medium text-foreground">On</span>
+              </div>
+            </div>
+          </MockFrame>
+        }
+      />
+
+      {/* Export */}
+      <Split
+        id="export"
+        icon={FileCode2}
+        eyebrow="Email-safe export"
+        title="HTML built for real inboxes"
+        body="Export is backend-authoritative: predictable, table-based markup with inline styles and Outlook (MSO) fallbacks — so what you design renders the same from Gmail to Outlook."
+        bullets={[
+          "Table-based layout with inline styles — no surprises across clients.",
+          "MSO conditional fallbacks for Outlook’s rendering engine.",
+          "Non-blocking validation flags issues before you ship.",
+        ]}
+        inverted
+        media={
+          <CodeBlock
+            title="export-html"
+            snippets={{
+              label: "HTML",
+              language: "html",
+              code: `<table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+  <tr>
+    <td style="padding:24px;font-family:Arial,sans-serif;">
+      <h1 style="margin:0 0 12px;font-size:24px;">Welcome aboard.</h1>
+      <!--[if mso]><table role="presentation"><tr><td><![endif]-->
+      <a href="{{ cta_url }}"
+         style="display:inline-block;padding:12px 18px;
+                background:#2A2823;color:#ffffff;border-radius:8px;">
+        Get started
+      </a>
+      <!--[if mso]></td></tr></table><![endif]-->
+    </td>
+  </tr>
+</table>`,
+            }}
           />
+        }
+      />
 
-          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            <FeatureCard
-              icon={<Sparkles className="size-5" />}
-              title="Chat-first drafting"
-              description="Generate copy, layout, and variants in minutes."
-              href="/features#ai-chat"
-              linkLabel="AI chat"
-            />
-            <FeatureCard
-              icon={<LayoutPanelTop className="size-5" />}
-              title="Visual editing"
-              description="Refine spacing, typography, and structure visually."
-              href="/features#visual-editor"
-              linkLabel="Editor"
-            />
-            <FeatureCard
-              icon={<Workflow className="size-5" />}
-              title="Sequences"
-              description="Create multi-step flows with consistent voice and design."
-              href="/features#sequences"
-              linkLabel="Sequences"
-            />
-            <FeatureCard
-              icon={<Braces className="size-5" />}
-              title="MCP integration"
-              description="Automate workflows and integrations with MCP-first primitives."
-              href="/features#mcp"
-              linkLabel="MCP"
-            />
+      {/* Also included */}
+      <section className="border-t border-border">
+        <div className="mx-auto w-4/5 max-w-[1040px] py-20">
+          <SectionHeading eyebrow="Also included" title="The rest of the toolkit." />
+          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {ALSO.map((a) => {
+              const Icon = a.icon
+              return (
+                <div key={a.t} className="rounded-lg border border-border bg-card p-6">
+                  <Icon className="size-5 text-foreground/70" />
+                  <h3 className="mt-4 text-[15px] font-semibold text-foreground">{a.t}</h3>
+                  <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{a.d}</p>
+                </div>
+              )
+            })}
           </div>
         </div>
       </section>
 
-      <FeatureSection
-        id="ai-chat"
-        icon={<BotMessageSquare className="size-5" />}
-        title="AI-powered chat that drafts like a teammate"
-        description="Start with intent (goal, audience, brand voice), then iterate in conversation. Dezignee can propose structure, write copy, and generate variants—without locking you out of manual control."
-        bullets={[
-          "Define tone once, reuse it across templates and multi-step campaigns.",
-          "Ask for alternatives (short/long, more formal, more playful) instantly.",
-          "Generate subject lines, preheaders, CTAs, and layout suggestions together.",
-        ]}
-        codeTitle="Example: prompt → structured draft"
-        codeSnippets={[
-          {
-            label: "Prompt",
-            language: "md",
-            code: `You are writing an onboarding email for a B2B SaaS.
-
-Audience: new trial users
-Tone: friendly, concise, confident
-Goal: get them to complete the first setup
-Brand constraints: no hypey words, avoid emojis
-
-Create a clean layout + copy with:
-- headline
-- 3 short bullets
-- primary CTA
-- secondary help link`,
-          },
-          {
-            label: "Draft (snippet)",
-            language: "md",
-            code: `Headline: Set up your first workspace in minutes
-
-Bullets:
-- Invite your teammates and assign roles
-- Connect your data source (takes ~2 minutes)
-- Turn on your first automation
-
-CTA: Finish setup
-Help: Need a hand? Reply to this email or visit Help Center`,
-          },
-        ]}
-        ctas={[
-          { href: "/pricing", label: "Start with AI" },
-          { href: "/contact", label: "See a demo", variant: "outline" },
-        ]}
-      />
-
-      <FeatureSection
-        id="visual-editor"
-        inverted
-        icon={<LayoutPanelTop className="size-5" />}
-        title="A visual editor for pixel-perfect control"
-        description="AI gets you close—then the editor gets you to “ship it.” Adjust layout, spacing, and hierarchy visually without wrestling raw tables and inline styles."
-        bullets={[
-          "Tweak spacing, typography, and alignment with predictable controls.",
-          "Build reusable patterns with blocks (headers, footers, CTAs).",
-          "Keep output clean so it renders reliably across email clients.",
-        ]}
-        codeTitle="Example: layout blocks (conceptual)"
-        codeSnippets={[
-          {
-            label: "Blocks",
-            language: "json",
-            code: `{
-  "template": {
-    "header": { "logo": true, "nav": false },
-    "body": [
-      { "type": "hero", "headline": "...", "cta": "Finish setup" },
-      { "type": "bullets", "items": ["...", "...", "..."] },
-      { "type": "divider" },
-      { "type": "footer", "links": ["Help Center", "Unsubscribe"] }
-    ]
-  }
-}`,
-          },
-          {
-            label: "Export",
-            language: "html",
-            code: `<!-- exported HTML snippet -->
-<table role="presentation" width="100%">
-  <tr><td style="padding:24px;">
-    <h1 style="margin:0 0 12px;">Set up your first workspace</h1>
-    <a href="#" style="display:inline-block;padding:12px 16px;">Finish setup</a>
-  </td></tr>
-</table>`,
-          },
-        ]}
-        ctas={[
-          { href: "/docs", label: "Embedding guide" },
-          { href: "/pricing", label: "Choose a plan", variant: "outline" },
-        ]}
-      />
-
-      <FeatureSection
-        id="sequences"
-        icon={<Workflow className="size-5" />}
-        title="Email sequences for onboarding, lifecycle, and growth"
-        description="Generate multi-step campaigns with a consistent voice and design system. Dezignee helps you keep the narrative coherent while tailoring each step to user behavior."
-        bullets={[
-          "Create 3–10 step flows with consistent components and styling.",
-          "Map steps to triggers (trial start, activation, feature adoption).",
-          "Maintain brand voice across every step with fast variants.",
-        ]}
-        codeTitle="Example: sequence outline"
-        codeSnippets={[
-          {
-            label: "Sequence",
-            language: "json",
-            code: `{
-  "name": "Trial onboarding",
-  "steps": [
-    { "day": 0, "goal": "setup", "template": "welcome-setup" },
-    { "day": 2, "goal": "activation", "template": "first-success" },
-    { "day": 5, "goal": "feature adoption", "template": "power-feature" },
-    { "day": 9, "goal": "conversion", "template": "trial-ending" }
-  ]
-}`,
-          },
-          {
-            label: "Variant prompt",
-            language: "md",
-            code: `Rewrite step #2 for users who *have not* connected a data source.
-Keep it concise and helpful. Include a single CTA.`,
-          },
-        ]}
-        ctas={[
-          { href: "/pricing", label: "Build sequences" },
-          { href: "/contact", label: "Talk through use cases", variant: "outline" },
-        ]}
-      />
-
-      <FeatureSection
-        id="mcp"
-        inverted
-        icon={<Braces className="size-5" />}
-        title="MCP integration for developer-friendly automation"
-        description="Dezignee is designed to plug into modern developer tooling. Use MCP-first primitives to connect your workflows—generate templates, produce sequences, and export HTML programmatically."
-        bullets={[
-          "Embed the editor while keeping export control in your product.",
-          "Use MCP tooling to automate generation, QA checks, and publishing.",
-          "Keep integration light with clear, composable primitives.",
-        ]}
-        codeTitle="Example: SDK + MCP enabled"
-        codeSnippets={[
-          {
-            label: "JavaScript",
-            language: "js",
-            code: `import { createDezigneeEditor } from "@dezignee/sdk"
-
-const editor = createDezigneeEditor({
-  mount: document.getElementById("editor"),
-  mcp: { enabled: true },
-})
-
-// Generate a draft via tools, then export HTML
-await editor.tools.run("email.sequence", { goal: "trial onboarding" })
-const html = await editor.exportHtml()`,
-          },
-          {
-            label: "MCP context",
-            language: "json",
-            code: `{
-  "tools": ["email.generate", "email.sequence", "email.export"],
-  "context": {
-    "brandVoice": "friendly, concise",
-    "designTokens": { "primary": "#06B6D4" }
-  }
-}`,
-          },
-        ]}
-        ctas={[
-          { href: "/docs", label: "Read docs" },
-          { href: "/contact", label: "Integrate with us", variant: "outline" },
-        ]}
-      />
-
-      <section className="border-t bg-background">
-        <div className="container py-16 sm:py-20">
-          <div className="relative overflow-hidden rounded-3xl border bg-card p-8 shadow-sm sm:p-12">
-            <div
-              className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-br from-primary/15 via-transparent to-cyan-400/15"
-              aria-hidden="true"
-            />
-
-            <div className="mx-auto max-w-2xl text-center">
-              <p className="text-xs font-semibold uppercase tracking-wide text-primary">
-                Next step
-              </p>
-              <h2 className="mt-3 text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
-                Want to see Dezignee in action?
+      {/* CTA */}
+      <section>
+        <div className="mx-auto w-4/5 max-w-[1040px] py-20">
+          <Reveal>
+            <div className="flex flex-col items-center gap-6 rounded-3xl border border-border bg-secondary px-10 py-14 text-center">
+              <h2 className="font-display text-balance text-[34px] leading-[1.1] text-foreground">
+                See it build an email in real time.
               </h2>
-              <p className="mt-4 text-pretty text-base leading-relaxed text-muted-foreground sm:text-lg">
-                Tell us your use case—dashboard workflows, embeddable SDK, or
-                both—and we’ll show you the fastest path to shipping.
+              <p className="-mt-2 max-w-md text-pretty text-lg text-muted-foreground">
+                Start free and draft your first campaign in minutes — no credit card.
               </p>
-
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-center">
+              <div className="flex flex-col gap-3 sm:flex-row">
                 <Button asChild size="lg">
-                  <Link href="/pricing">Get Started</Link>
+                  <Link href="/pricing">Start free</Link>
                 </Button>
                 <Button asChild size="lg" variant="outline">
-                  <Link href="/contact">Request a demo</Link>
+                  <Link href="/docs" className="gap-1.5">
+                    Developer docs <ArrowRight className="size-4" />
+                  </Link>
                 </Button>
               </div>
             </div>
-          </div>
+          </Reveal>
         </div>
       </section>
     </>
   )
 }
-

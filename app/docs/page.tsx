@@ -1,494 +1,479 @@
-import Link from "next/link"
 import type { Metadata } from "next"
-import { BookOpen, Braces, LayoutPanelTop, Rocket, Workflow } from "lucide-react"
+import Link from "next/link"
+import {
+  ArrowRight,
+  Boxes,
+  FileCode2,
+  KeyRound,
+  Mail,
+  MessagesSquare,
+  Plug,
+  Puzzle,
+  Radio,
+  Terminal,
+  Workflow,
+} from "lucide-react"
 
-import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import { Reveal } from "@/components/reveal"
 import { CodeBlock } from "@/components/code-block"
-import { Hero } from "@/components/sections/hero"
+import { PageHeader } from "@/components/sections/page-header"
 
 export const metadata: Metadata = {
-  title: "Docs",
+  title: "Developers",
   description:
-    "Quick start guides for the embeddable SDK, MCP integration, and dashboard workflows.",
-  alternates: {
-    canonical: "/docs",
-  },
+    "Build on Dezignee three ways: embed the editor with the plugin SDK, stream drafts over the /ai/chat API, or connect agents through the Dezignee MCP servers.",
+  alternates: { canonical: "/docs" },
 }
 
 function SectionHeading({
   eyebrow,
   title,
   description,
+  align = "center",
 }: {
   eyebrow?: string
-  title: string
-  description?: string
+  title: React.ReactNode
+  description?: React.ReactNode
+  align?: "center" | "left"
 }) {
   return (
-    <header className="mx-auto max-w-2xl text-center">
+    <header className={align === "center" ? "mx-auto max-w-2xl text-center" : "max-w-2xl"}>
       {eyebrow ? (
-        <p className="text-xs font-semibold uppercase tracking-wide text-primary">
+        <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.04em] text-muted-foreground">
+          <span className="size-1.5 rounded-full bg-terracotta" aria-hidden="true" />
           {eyebrow}
         </p>
       ) : null}
-      <h2 className="mt-3 text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
+      <h2 className="font-display mt-3.5 text-balance text-[34px] leading-[1.12] text-foreground sm:text-[38px]">
         {title}
       </h2>
       {description ? (
-        <p className="mt-4 text-pretty text-base leading-relaxed text-muted-foreground sm:text-lg">
-          {description}
-        </p>
+        <p className="mt-4 text-pretty text-lg leading-relaxed text-muted-foreground">{description}</p>
       ) : null}
     </header>
   )
 }
 
-function DocSection({
-  id,
-  icon,
-  title,
-  description,
-  steps,
-  codeTitle,
-  codeSnippets,
-  ctas,
-}: {
-  id: string
-  icon: React.ReactNode
-  title: string
-  description: string
-  steps: string[]
-  codeTitle: string
-  codeSnippets: { label: string; language: string; code: string }[]
-  ctas: { href: string; label: string; variant?: "default" | "outline" }[]
-}) {
-  return (
-    <section id={id} className="border-t bg-background scroll-mt-24">
-      <div className="container py-16 sm:py-20">
-        <div className="grid gap-10 lg:grid-cols-2 lg:items-start">
-          <div className="space-y-6">
-            <div className="flex items-center gap-3">
-              <div className="flex size-11 items-center justify-center rounded-xl border bg-background">
-                <span className="text-primary">{icon}</span>
-              </div>
-              <Badge variant="secondary" className="border-primary/20">
-                Documentation
-              </Badge>
-            </div>
+const TRACKS = [
+  {
+    icon: Puzzle,
+    tag: "Track A · Plugin SDK",
+    t: "Embed the editor",
+    d: "Drop the full editor into your product. Your server mints a short-lived session from an API key; the iframe loads a sequence and edits it.",
+    code: "@dezignee/plugin",
+  },
+  {
+    icon: MessagesSquare,
+    tag: "Track C · BYO chat",
+    t: "Bring your own chat",
+    d: "Already have a chat UI? Stream structured drafts into it over the REST AI endpoint with server-sent events.",
+    code: "POST /api/v1/ai/chat",
+  },
+  {
+    icon: Plug,
+    tag: "MCP",
+    t: "Connect over MCP",
+    d: "Point Cursor, VS Code, or Claude Desktop at the Dezignee MCP servers to inspect workspaces and edit emails from your agent.",
+    code: "dezignee-plugin · dezignee-users",
+  },
+]
 
-            <div className="space-y-3">
-              <h3 className="text-balance text-2xl font-semibold tracking-tight sm:text-3xl">
-                {title}
-              </h3>
-              <p className="text-pretty text-base leading-relaxed text-muted-foreground sm:text-lg">
-                {description}
-              </p>
-            </div>
+const PLUGIN_TOOLS = [
+  "detect_project",
+  "install_bridge",
+  "create_embed_component",
+  "configure_init",
+  "workspace_overview",
+  "list_sequences",
+  "list_emails",
+  "diagnostics",
+]
+const USERS_TOOLS = [
+  "suggest_copy",
+  "suggest_layout",
+  "suggest_styles",
+  "generate_commands",
+  "apply_commands",
+  "apply_ai_suggestion",
+]
 
-            <ol className="space-y-2 text-sm text-muted-foreground">
-              {steps.map((item, idx) => (
-                <li key={item} className="flex gap-3">
-                  <span className="mt-0.5 inline-flex size-6 shrink-0 items-center justify-center rounded-full border bg-background text-xs font-semibold text-foreground">
-                    {idx + 1}
-                  </span>
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ol>
+const RESOURCES = [
+  { icon: Mail, uri: "email://{emailId}", d: "An email document — current or a specific version." },
+  { icon: Workflow, uri: "sequence://{sequenceId}", d: "A sequence with all of its emails." },
+  { icon: Boxes, uri: "workspace://{workspaceId}", d: "Workspace metadata, sequences, and emails." },
+]
 
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-              {ctas.map((cta) => (
-                <Button
-                  key={cta.href}
-                  asChild
-                  variant={cta.variant ?? "default"}
-                >
-                  <Link href={cta.href}>{cta.label}</Link>
-                </Button>
-              ))}
-            </div>
-          </div>
-
-          <div className="space-y-4">
-            <CodeBlock title={codeTitle} snippets={codeSnippets} />
-            <div className="rounded-2xl border bg-muted/10 p-5">
-              <p className="text-sm font-medium">Note</p>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                The snippets use placeholder package names and tool identifiers.
-                Replace them with your real SDK/API details when ready.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  )
-}
-
-export default function DocsPage() {
+export default function DevelopersPage() {
   return (
     <>
-      <Hero
-        badge="Docs"
-        title={
-          <>
-            Integrate the{" "}
-            <span className="bg-gradient-to-r from-primary via-cyan-400 to-primary bg-clip-text text-transparent">
-              SDK + MCP
-            </span>{" "}
-            — or use the dashboard.
-          </>
-        }
-        description={
-          <>
-            Dezignee supports two modes: an embeddable editor for products and a
-            dashboard for teams. These docs outline the structure and key
-            integration steps.
-          </>
-        }
-        primaryCta={{ href: "#quick-start", label: "Quick Start" }}
-        secondaryCta={{ href: "/contact", label: "Talk to us" }}
-      >
-        <div className="flex flex-wrap justify-center gap-2">
-          {[
-            { href: "#quick-start", label: "Quick start" },
-            { href: "#sdk", label: "SDK integration" },
-            { href: "#dashboard", label: "Dashboard guide" },
-            { href: "#api", label: "API reference" },
-            { href: "#examples", label: "Examples" },
-          ].map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              className="rounded-full border bg-background/60 px-3 py-1 text-xs text-muted-foreground hover:text-foreground"
-            >
-              {item.label}
-            </a>
-          ))}
-        </div>
-      </Hero>
+      <PageHeader
+        eyebrow="Developers"
+        title={<>Three ways to build on Dezignee.</>}
+        description="One command-driven document engine powers the editor UI, the AI, and MCP. Embed it, stream from it, or drive it from your agent — your choice."
+        ctas={[
+          { href: "/pricing", label: "Get an API key" },
+          { href: "#mcp", label: "MCP setup", variant: "outline" },
+        ]}
+        anchors={[
+          { href: "#tracks", label: "Integration tracks" },
+          { href: "#commands", label: "Command model" },
+          { href: "#mcp", label: "MCP servers" },
+          { href: "#auth", label: "Auth & keys" },
+        ]}
+      />
 
-      <section className="border-t bg-background">
-        <div className="container py-16 sm:py-20">
+      {/* Tracks */}
+      <section id="tracks" className="scroll-mt-20 border-b border-border">
+        <div className="mx-auto w-4/5 max-w-[1040px] py-20">
           <SectionHeading
-            eyebrow="Overview"
-            title="One workflow, two surfaces."
-            description="Draft with AI, refine visually, then export HTML. Do it in the dashboard—or embed the same editor experience in your product."
+            eyebrow="Integration tracks"
+            title="Pick the surface that fits your stack."
+            description="Mix and match — embed the editor for your users and drive the same workspace from an agent over MCP."
           />
-
-          <div className="mt-10 grid gap-6 lg:grid-cols-3">
-            {[
-              {
-                title: "Dashboard",
-                description:
-                  "AI chat + visual editor for teams creating templates and sequences.",
-                icon: <LayoutPanelTop className="size-5" />,
-              },
-              {
-                title: "Embeddable SDK",
-                description:
-                  "Embed the editor UI inside your app with programmatic exports.",
-                icon: <Braces className="size-5" />,
-              },
-              {
-                title: "MCP workflows",
-                description:
-                  "Automate generation, QA, and publishing using MCP-compatible primitives.",
-                icon: <Workflow className="size-5" />,
-              },
-            ].map((card) => (
-              <div
-                key={card.title}
-                className="rounded-2xl border bg-card p-6 shadow-sm"
-              >
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <p className="text-sm font-semibold tracking-tight">
-                      {card.title}
-                    </p>
-                    <p className="mt-2 text-sm text-muted-foreground">
-                      {card.description}
-                    </p>
-                  </div>
-                  <div className="flex size-11 shrink-0 items-center justify-center rounded-xl border bg-background text-primary">
-                    {card.icon}
-                  </div>
-                </div>
-              </div>
-            ))}
+          <div className="mt-12 grid gap-5 lg:grid-cols-3">
+            {TRACKS.map((tr) => {
+              const Icon = tr.icon
+              return (
+                <article key={tr.t} className="flex flex-col rounded-lg border border-border bg-card p-6">
+                  <span className="inline-flex size-11 items-center justify-center rounded-xl border border-terracotta/30 bg-terracotta-tint text-terracotta">
+                    <Icon className="size-5" />
+                  </span>
+                  <p className="mt-5 text-xs font-semibold uppercase tracking-[0.04em] text-muted-foreground">{tr.tag}</p>
+                  <h3 className="mt-1.5 text-lg font-semibold text-foreground">{tr.t}</h3>
+                  <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">{tr.d}</p>
+                  <code className="mt-4 block truncate rounded-md bg-secondary px-2.5 py-1.5 font-mono text-xs text-foreground/80">
+                    {tr.code}
+                  </code>
+                </article>
+              )
+            })}
           </div>
         </div>
       </section>
 
-      <DocSection
-        id="quick-start"
-        icon={<Rocket className="size-5" />}
-        title="Quick start (embeddable)"
-        description="Mount the editor, enable MCP, and export HTML programmatically."
-        steps={[
-          "Install the SDK in your application.",
-          "Create an editor instance and mount it into your UI.",
-          "Enable MCP tools for generation + export workflows.",
-          "Export HTML when the user clicks “Publish”.",
-        ]}
-        codeTitle="Quick start"
-        codeSnippets={[
-          {
-            label: "Install",
-            language: "bash",
-            code: `npm install @dezignee/sdk`,
-          },
-          {
-            label: "Embed",
-            language: "js",
-            code: `import { createDezigneeEditor } from "@dezignee/sdk"
-
-const editor = createDezigneeEditor({
-  mount: document.getElementById("dezignee-editor"),
-  mcp: { enabled: true },
-})
-
-// Example: export HTML on publish
-const html = await editor.exportHtml()`,
-          },
-        ]}
-        ctas={[
-          { href: "#sdk", label: "SDK integration details" },
-          { href: "/pricing", label: "See pricing", variant: "outline" },
-        ]}
-      />
-
-      <DocSection
-        id="sdk"
-        icon={<Braces className="size-5" />}
-        title="SDK integration guide"
-        description="A suggested structure for embedding Dezignee inside a product (or plugin) with clear lifecycle hooks."
-        steps={[
-          "Create a wrapper component that mounts/unmounts the editor cleanly.",
-          "Pass theming tokens (colors, fonts) to match your product.",
-          "Wire “Save”, “Publish”, and “Export” actions to your backend.",
-          "Use MCP tools for generation and sequence workflows when needed.",
-        ]}
-        codeTitle="Suggested integration surface"
-        codeSnippets={[
-          {
-            label: "Embed wrapper",
-            language: "tsx",
-            code: `// Pseudocode
-export function EmailEditorEmbed({ onPublish }) {
-  useEffect(() => {
-    const editor = createDezigneeEditor({
-      mount: document.getElementById("mount"),
-      theme: { primary: "#06B6D4" },
-      mcp: { enabled: true },
-    })
-
-    return () => editor.destroy()
-  }, [])
-
-  return <div id="mount" />
-}`,
-          },
-          {
-            label: "Export",
-            language: "js",
-            code: `const html = await editor.exportHtml()
-await fetch("/api/templates", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({ html }),
-})`,
-          },
-        ]}
-        ctas={[
-          { href: "#api", label: "API reference" },
-          { href: "/contact", label: "Get integration help", variant: "outline" },
-        ]}
-      />
-
-      <DocSection
-        id="dashboard"
-        icon={<LayoutPanelTop className="size-5" />}
-        title="Dashboard usage"
-        description="Use the dashboard to generate templates and sequences, then export clean HTML for your ESP or product."
-        steps={[
-          "Start from a prompt: goal, audience, tone, brand constraints.",
-          "Refine copy and layout in AI chat until the structure is right.",
-          "Use the visual editor for spacing, hierarchy, and block-level tweaks.",
-          "Export HTML and publish to your ESP/CMS/workflow.",
-        ]}
-        codeTitle="Example: prompt → HTML"
-        codeSnippets={[
-          {
-            label: "Prompt",
-            language: "md",
-            code: `Write a 3-email onboarding sequence for new trial users.
-
-Constraints:
-- friendly, concise
-- include a clear CTA in each email
-- keep layout clean and scannable`,
-          },
-          {
-            label: "Exported HTML",
-            language: "html",
-            code: `<!-- exported HTML snippet -->
-<table role="presentation" width="100%">
-  <tr><td style="padding:24px;">
-    <h1 style="margin:0 0 12px;">Welcome — let’s get you set up</h1>
-    <p style="margin:0 0 16px;">...</p>
-    <a href="#" style="display:inline-block;padding:12px 16px;">Finish setup</a>
-  </td></tr>
-</table>`,
-          },
-        ]}
-        ctas={[
-          { href: "/pricing", label: "Choose a plan" },
-          { href: "/features", label: "See features", variant: "outline" },
-        ]}
-      />
-
-      <section id="api" className="border-t bg-background scroll-mt-24">
-        <div className="container py-16 sm:py-20">
-          <SectionHeading
-            eyebrow="API reference"
-            title="MCP tools and SDK methods (placeholder)."
-            description="A starter map of the primitives you can expose. Replace with your real endpoints and auth requirements."
-          />
-
-          <div className="mt-10 grid gap-6 lg:grid-cols-2">
+      {/* Embed quick start */}
+      <section className="border-b border-border">
+        <div className="mx-auto grid w-4/5 max-w-[1040px] items-center gap-12 py-20 lg:grid-cols-2">
+          <div>
+            <SectionHeading align="left" eyebrow="Track A" title="Embed the editor in minutes." />
+            <p className="mt-4 text-pretty text-[15px] leading-relaxed text-muted-foreground">
+              Install the plugin, create a session from your API key on the server, and mount the
+              editor. The iframe authenticates with the short-lived session token — your API key never
+              touches the browser.
+            </p>
+            <ul className="mt-5 space-y-2.5">
+              {[
+                "Server creates a session: API key (dzg_api_) → session token (dzg_sess_).",
+                "The editor loads a sequence and applies commands as the user edits.",
+                "Export email-safe HTML from the host whenever you publish.",
+              ].map((b) => (
+                <li key={b} className="flex gap-2.5 text-[15px] text-foreground/80">
+                  <span className="mt-2 size-1.5 shrink-0 rounded-full bg-terracotta" aria-hidden="true" />
+                  <span className="leading-snug">{b}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <Reveal delay={0.05}>
             <CodeBlock
-              title="MCP tools"
+              title="Embed with @dezignee/plugin"
               snippets={[
                 {
-                  label: "Tools",
+                  label: "Install",
+                  language: "bash",
+                  code: `npm install @dezignee/plugin`,
+                },
+                {
+                  label: "Server",
+                  language: "ts",
+                  code: `// Create a short-lived editor session from your API key.
+const res = await fetch("https://api.dezignee.com/api/v1/sessions", {
+  method: "POST",
+  headers: {
+    "Authorization": \`Bearer \${process.env.DEZIGNEE_API_KEY}\`, // dzg_api_...
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({ sequenceId }),
+})
+const { sessionToken } = await res.json() // dzg_sess_...`,
+                },
+                {
+                  label: "Client",
+                  language: "ts",
+                  code: `import { createEditor } from "@dezignee/plugin"
+
+const editor = createEditor({
+  mount: document.getElementById("editor")!,
+  sessionToken,            // from your server
+  apiUrl: "https://api.dezignee.com",
+})
+
+// Export email-safe HTML on publish
+const html = await editor.exportHTML()`,
+                },
+              ]}
+            />
+          </Reveal>
+        </div>
+      </section>
+
+      {/* Command model */}
+      <section id="commands" className="scroll-mt-20 border-b border-border">
+        <div className="mx-auto grid w-4/5 max-w-[1040px] items-center gap-12 py-20 lg:grid-cols-2">
+          <Reveal className="lg:order-2" delay={0.05}>
+            <CodeBlock
+              title="POST /api/v1/emails/{id}/commands"
+              snippets={[
+                {
+                  label: "Request",
                   language: "json",
                   code: `{
-  "tools": [
-    "email.generate",
-    "email.sequence",
-    "email.export"
-  ],
-  "context": {
-    "brandVoice": "friendly, concise",
-    "designTokens": { "primary": "#06B6D4" }
-  }
+  "commands": [
+    {
+      "type": "ELEMENT_UPDATE",
+      "elementId": "btn_1",
+      "props": { "backgroundColor": "#D97757" }
+    }
+  ]
 }`,
                 },
-              ]}
-            />
-            <CodeBlock
-              title="SDK methods"
-              snippets={[
                 {
-                  label: "Methods",
-                  language: "ts",
-                  code: `type DezigneeEditor = {
-  exportHtml(): Promise<string>
-  destroy(): void
-  tools: {
-    run(tool: string, input?: unknown): Promise<unknown>
-  }
+                  label: "Response",
+                  language: "json",
+                  code: `{
+  "version": 42,
+  "patch": [
+    {
+      "op": "replace",
+      "path": "/body/rows/2/columns/0/elements/0/props/backgroundColor",
+      "value": "#D97757"
+    }
+  ]
 }`,
                 },
               ]}
             />
+          </Reveal>
+          <div className="lg:order-1">
+            <SectionHeading align="left" eyebrow="One pipeline" title="Everything is a command." />
+            <p className="mt-4 text-pretty text-[15px] leading-relaxed text-muted-foreground">
+              Manual edits, AI chat, and MCP all emit the same typed commands against a versioned
+              document. The backend validates each one and returns an RFC&nbsp;6902 JSON patch plus a
+              new version — so every client stays consistent and nothing is a one-way door.
+            </p>
+            <ul className="mt-5 space-y-2.5">
+              {[
+                "Typed commands: ELEMENT_UPDATE, ROW_INSERT, META_UPDATE, and more.",
+                "Each call returns a JSON patch + incremented version.",
+                "The same endpoint backs a single email or a whole sequence.",
+              ].map((b) => (
+                <li key={b} className="flex gap-2.5 text-[15px] text-foreground/80">
+                  <span className="mt-2 size-1.5 shrink-0 rounded-full bg-terracotta" aria-hidden="true" />
+                  <span className="leading-snug">{b}</span>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </section>
 
-      <section id="examples" className="border-t bg-muted/10 scroll-mt-24">
-        <div className="container py-16 sm:py-20">
+      {/* MCP servers */}
+      <section id="mcp" className="scroll-mt-20 border-b border-border">
+        <div className="mx-auto w-4/5 max-w-[1040px] py-20">
           <SectionHeading
-            eyebrow="Examples"
-            title="Common workflows you can implement quickly."
-            description="Copy/paste-ready examples for embedding + automation patterns."
+            eyebrow="MCP servers"
+            title="Two servers for two jobs."
+            description="A read-only server for developer setup and inspection, and a read-write server for design assistance and command emission."
           />
-
-          <div className="mt-10 grid gap-6 lg:grid-cols-2">
-            <div className="rounded-2xl border bg-card p-6 shadow-sm">
-              <div className="flex items-center justify-between gap-4">
-                <p className="text-sm font-semibold tracking-tight">
-                  “Generate then export”
-                </p>
-                <Badge variant="secondary" className="border-primary/20">
-                  SDK + MCP
-                </Badge>
+          <div className="mt-12 grid gap-5 lg:grid-cols-2">
+            {/* plugin server */}
+            <article className="flex flex-col rounded-lg border border-border bg-card p-6">
+              <div className="flex items-center gap-2.5">
+                <Terminal className="size-5 text-foreground/70" />
+                <code className="font-mono text-sm font-semibold text-foreground">dezignee-plugin</code>
+                <span className="ml-auto rounded-full bg-secondary px-2.5 py-0.5 text-[11px] font-medium text-muted-foreground">
+                  read-only
+                </span>
               </div>
-              <p className="mt-2 text-sm text-muted-foreground">
-                Run a generation tool, then export HTML for your pipeline.
+              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                Setup &amp; inspection for Cursor and VS Code — detect your stack, scaffold the embed,
+                and inspect a workspace without changing anything.
               </p>
-              <div className="mt-4">
-                <CodeBlock
-                  snippets={{
-                    label: "Example",
-                    language: "js",
-                    code: `await editor.tools.run("email.generate", {
-  goal: "product announcement",
-  tone: "confident, concise",
-})
-
-const html = await editor.exportHtml()`,
-                  }}
-                />
+              <div className="mt-4 flex flex-wrap gap-1.5">
+                {PLUGIN_TOOLS.map((t) => (
+                  <code key={t} className="rounded bg-secondary px-2 py-0.5 font-mono text-[11px] text-foreground/75">
+                    {t}
+                  </code>
+                ))}
               </div>
-            </div>
-
-            <div className="rounded-2xl border bg-card p-6 shadow-sm">
-              <div className="flex items-center justify-between gap-4">
-                <p className="text-sm font-semibold tracking-tight">
-                  “Sequence scaffolding”
-                </p>
-                <Badge variant="secondary" className="border-primary/20">
-                  Campaigns
-                </Badge>
+            </article>
+            {/* users server */}
+            <article className="flex flex-col rounded-lg border border-border bg-card p-6">
+              <div className="flex items-center gap-2.5">
+                <MessagesSquare className="size-5 text-foreground/70" />
+                <code className="font-mono text-sm font-semibold text-foreground">dezignee-users</code>
+                <span className="ml-auto rounded-full bg-terracotta-tint px-2.5 py-0.5 text-[11px] font-medium text-terracotta">
+                  read-write
+                </span>
               </div>
-              <p className="mt-2 text-sm text-muted-foreground">
-                Generate a multi-step campaign outline, then edit each step.
+              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                Design assistance &amp; command emission for Claude Desktop — suggest improvements and
+                apply changes to a live email or sequence.
               </p>
-              <div className="mt-4">
-                <CodeBlock
-                  snippets={{
-                    label: "Example",
-                    language: "json",
-                    code: `{
-  "tool": "email.sequence",
-  "input": {
-    "name": "Trial onboarding",
-    "steps": 4,
-    "goal": "activation"
+              <div className="mt-4 flex flex-wrap gap-1.5">
+                {USERS_TOOLS.map((t) => (
+                  <code key={t} className="rounded bg-secondary px-2 py-0.5 font-mono text-[11px] text-foreground/75">
+                    {t}
+                  </code>
+                ))}
+              </div>
+            </article>
+          </div>
+
+          <div className="mt-6">
+            <CodeBlock
+              title="claude_desktop_config.json"
+              snippets={[
+                {
+                  label: "Claude Desktop",
+                  language: "json",
+                  code: `{
+  "mcpServers": {
+    "dezignee-users": {
+      "command": "python",
+      "args": [
+        "/path/to/dezignee-backend/scripts/mcp-users-server.py",
+        "--workspace-id=your-workspace-id",
+        "--api-key=dzg_api_your-api-key",
+        "--api-url=https://api.dezignee.com"
+      ]
+    }
   }
 }`,
-                  }}
-                />
-              </div>
-            </div>
+                },
+                {
+                  label: "Cursor / VS Code",
+                  language: "json",
+                  code: `{
+  "mcpServers": {
+    "dezignee-plugin": {
+      "command": "python",
+      "args": ["/path/to/dezignee-backend/scripts/mcp-plugin-server.py"],
+      "env": {
+        "MCP_WORKSPACE_ID": "your-workspace-id",
+        "MCP_API_KEY": "dzg_api_your-api-key",
+        "MCP_API_URL": "https://api.dezignee.com"
+      }
+    }
+  }
+}`,
+                },
+              ]}
+            />
           </div>
 
-          <div className="mt-10 rounded-2xl border bg-card p-6 shadow-sm">
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-              <div className="flex items-center gap-3">
-                <div className="flex size-11 items-center justify-center rounded-xl border bg-background text-primary">
-                  <BookOpen className="size-5" />
+          {/* resources */}
+          <div className="mt-10 grid gap-4 sm:grid-cols-3">
+            {RESOURCES.map((r) => {
+              const Icon = r.icon
+              return (
+                <div key={r.uri} className="rounded-lg border border-border bg-card p-5">
+                  <Icon className="size-5 text-foreground/70" />
+                  <code className="mt-3 block font-mono text-[13px] font-semibold text-foreground">{r.uri}</code>
+                  <p className="mt-1.5 text-sm leading-snug text-muted-foreground">{r.d}</p>
                 </div>
-                <div>
-                  <p className="text-sm font-semibold tracking-tight">
-                    Want more examples (React, Next.js, vanilla JS)?
-                  </p>
-                  <p className="mt-1 text-sm text-muted-foreground">
-                    Tell us your stack and we’ll tailor a reference integration.
-                  </p>
-                </div>
-              </div>
-              <Button asChild variant="outline">
-                <Link href="/contact">Request examples</Link>
-              </Button>
+              )
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* BYO chat / auth */}
+      <section id="auth" className="scroll-mt-20 border-b border-border">
+        <div className="mx-auto grid w-4/5 max-w-[1040px] items-start gap-12 py-20 lg:grid-cols-2">
+          <div>
+            <SectionHeading align="left" eyebrow="Track C · BYO chat" title="Stream drafts into your own UI." />
+            <p className="mt-4 text-pretty text-[15px] leading-relaxed text-muted-foreground">
+              The AI endpoint streams tokens over server-sent events, so you can render the draft as it
+              forms inside your existing chat interface.
+            </p>
+            <CodeBlock
+              className="mt-5"
+              title="POST /api/v1/ai/chat"
+              snippets={{
+                label: "cURL",
+                language: "bash",
+                code: `curl -N https://api.dezignee.com/api/v1/ai/chat \\
+  -H "Authorization: Bearer dzg_api_your-api-key" \\
+  -H "Content-Type: application/json" \\
+  -d '{
+    "sequenceId": "seq_123",
+    "message": "Write a 3-step trial onboarding sequence"
+  }'
+# → text/event-stream`,
+              }}
+            />
+          </div>
+          <div>
+            <SectionHeading align="left" eyebrow="Auth & keys" title="Three tokens, clear roles." />
+            <div className="mt-5 space-y-3">
+              {[
+                { icon: KeyRound, name: "dzg_api_…", role: "API key", d: "Created per workspace with read / write scopes. Lives on your server; mints sessions and authorizes MCP." },
+                { icon: Radio, name: "dzg_sess_…", role: "Session token", d: "Short-lived, scoped to one editor session. Safe to hand to the iframe." },
+                { icon: FileCode2, name: "JWT", role: "User token", d: "Google OAuth or magic link, for dashboard users managing workspaces and keys." },
+              ].map((k) => {
+                const Icon = k.icon
+                return (
+                  <div key={k.role} className="flex gap-3.5 rounded-lg border border-border bg-card p-4">
+                    <span className="flex size-9 shrink-0 items-center justify-center rounded-md border border-border bg-secondary text-foreground/70">
+                      <Icon className="size-[18px]" />
+                    </span>
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <code className="font-mono text-[13px] font-semibold text-foreground">{k.name}</code>
+                        <span className="text-xs text-muted-foreground">{k.role}</span>
+                      </div>
+                      <p className="mt-1 text-sm leading-snug text-muted-foreground">{k.d}</p>
+                    </div>
+                  </div>
+                )
+              })}
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section>
+        <div className="mx-auto w-4/5 max-w-[1040px] py-20">
+          <Reveal>
+            <div className="overflow-hidden rounded-3xl bg-primary px-10 py-14 text-center">
+              <h2 className="font-display text-balance text-[34px] leading-[1.1] text-primary-foreground">
+                Get an API key and start building.
+              </h2>
+              <p className="mx-auto mt-4 max-w-md text-lg text-primary-foreground/60">
+                Create a workspace, generate a key, and embed the editor or connect your agent today.
+              </p>
+              <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
+                <Button asChild size="lg" className="bg-background text-foreground hover:bg-background/90">
+                  <Link href="/pricing">Start free</Link>
+                </Button>
+                <Button
+                  asChild
+                  size="lg"
+                  variant="outline"
+                  className="border-primary-foreground/25 bg-transparent text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"
+                >
+                  <Link href="/contact" className="gap-1.5">
+                    Talk to us <ArrowRight className="size-4" />
+                  </Link>
+                </Button>
+              </div>
+            </div>
+          </Reveal>
         </div>
       </section>
     </>
   )
 }
-
