@@ -3,11 +3,12 @@
 @tailwind utilities;
 
 /* ============================================================================
-   Dezignee Design System — re-skin of the marketing site (Phase 1)
+   Dezignee Design System — re-skin of the marketing site
    Warm paper / near-black primary / terracotta accent (used sparingly).
    shadcn tokens are expressed as HSL triplets derived from the DS hexes in
    _ds/colors_and_type.css. Fonts are wired via next/font in app/layout.tsx
    (--font-sans / --font-serif / --font-mono).
+   (Phase 1 tokens + Phase 5 polish layer.)
    ============================================================================ */
 
 @layer base {
@@ -101,5 +102,63 @@
     font-family: var(--font-serif), Georgia, "Times New Roman", serif;
     font-weight: 500;
     letter-spacing: -0.02em;
+  }
+
+  /* ---- Phase 5 polish ---- */
+
+  /* Smooth in-page anchor scrolling; offset for the 64px sticky navbar. */
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
+
+  /* Warm text selection (matches the DS terracotta tint). */
+  ::selection {
+    background-color: hsl(var(--terracotta) / 0.22);
+    color: hsl(var(--foreground));
+  }
+
+  /* Consistent, visible focus ring on keyboard navigation only. */
+  :focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* Respect users who prefer reduced motion. */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  /* Accessible skip-to-content link — visible only when focused. */
+  .skip-link {
+    position: fixed;
+    top: 0.75rem;
+    left: 0.75rem;
+    z-index: 100;
+    transform: translateY(-150%);
+    border-radius: var(--radius);
+    background: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+    padding: 0.625rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(40, 34, 25, 0.18);
+    transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .skip-link:focus {
+    transform: translateY(0);
   }
 }

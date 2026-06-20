@@ -21,7 +21,7 @@ export default function BlogPage() {
         title={
           <>
             Learn what we’re building—and how to{" "}
-            <span className="bg-gradient-to-r from-primary via-cyan-400 to-primary bg-clip-text text-transparent">
+            <span className="text-terracotta">
               ship better email
             </span>
             .

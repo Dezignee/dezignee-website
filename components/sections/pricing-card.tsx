@@ -60,7 +60,7 @@ export function PricingCard({
     >
       {highlighted ? (
         <div
-          className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-br from-primary/10 via-transparent to-cyan-400/10"
+          className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-br from-primary/10 via-transparent to-terracotta/10"
           aria-hidden="true"
         />
       ) : null}

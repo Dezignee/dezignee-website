@@ -23,7 +23,7 @@ export default function AboutPage() {
         title={
           <>
             Dezignee is building an{" "}
-            <span className="bg-gradient-to-r from-primary via-cyan-400 to-primary bg-clip-text text-transparent">
+            <span className="text-terracotta">
               AI-first
             </span>{" "}
             email editor for teams and developers.
