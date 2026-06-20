@@ -1,137 +1,90 @@
-import Image from "next/image"
 import Link from "next/link"
 import type { ReactNode } from "react"
 
 import { cn } from "@/lib/utils"
-import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import { McpDemo } from "@/components/sections/mcp-demo"
 
-export type HeroCta = {
-  href: string
-  label: string
-}
+export type HeroCta = { href: string; label: string }
 
 export type HeroProps = {
   className?: string
+  eyebrow?: string
+  /** @deprecated renamed to eyebrow — still accepted so Phase 2–4 pages compile unchanged */
   badge?: string
   title?: ReactNode
   description?: ReactNode
   primaryCta?: HeroCta
-  secondaryCta?: HeroCta
-  imageSrc?: string
-  imageAlt?: string
+  secondaryCta?: ReactNode | HeroCta
+  /** @deprecated accepted for Phase 2–4 page compat; rendered below CTAs */
   children?: ReactNode
+}
+
+function isCta(v: ReactNode | HeroCta): v is HeroCta {
+  return !!v && typeof v === "object" && "href" in (v as HeroCta)
 }
 
 export function Hero({
   className,
-  badge = "AI-first email editor",
+  eyebrow,
+  badge,
   title = (
     <>
-      Build email sequences with{" "}
-      <span className="bg-gradient-to-r from-primary via-cyan-400 to-primary bg-clip-text text-transparent">
-        chat-first AI
-      </span>
-      , then perfect the HTML visually.
+      Your AI builds the email.
+      <br />
+      <span className="text-muted-foreground">You make it yours.</span>
     </>
   ),
   description = (
     <>
-      Dezignee helps teams ship polished email templates and multi-step sequences
-      fast—whether you embed it via SDK or use the dashboard editor.
+      Chat to draft a campaign, refine every block by hand, and export email-safe
+      HTML — all over the same MCP your agents already speak.
     </>
   ),
-  primaryCta = { href: "/pricing", label: "Get Started" },
-  secondaryCta = { href: "/features", label: "View Demo" },
-  imageSrc,
-  imageAlt = "Dezignee editor preview",
+  primaryCta = { href: "/pricing", label: "Start free" },
+  secondaryCta = { href: "/features", label: "See how it works" },
   children,
 }: HeroProps) {
+  const label = eyebrow ?? badge ?? "MCP-native email editor"
+
   return (
     <section className={cn("relative overflow-hidden", className)}>
-      <div
-        className="pointer-events-none absolute inset-0 -z-10"
-        aria-hidden="true"
-      >
-        <div className="absolute left-1/2 top-0 h-[28rem] w-[50rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/15 blur-3xl" />
-        <div className="absolute bottom-0 left-0 h-[22rem] w-[22rem] -translate-x-1/3 translate-y-1/3 rounded-full bg-cyan-400/10 blur-3xl" />
-      </div>
+      <div className="mx-auto w-4/5 max-w-[1040px] pt-[76px] text-center">
+        {label ? (
+          <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.04em] text-muted-foreground motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-2 motion-safe:duration-700">
+            <span className="size-1.5 rounded-full bg-terracotta" aria-hidden="true" />
+            {label}
+          </p>
+        ) : null}
 
-      <div className="container py-20 sm:py-28">
-        <div className="grid items-center gap-10 lg:grid-cols-2">
-          <div className="space-y-6">
-            {badge ? (
-              <div className="motion-reduce:animate-none motion-reduce:transition-none animate-in fade-in slide-in-from-bottom-2 duration-700">
-                <Badge variant="secondary" className="border-primary/20">
-                  {badge}
-                </Badge>
-              </div>
-            ) : null}
+        <h1 className="font-display mt-5 text-balance text-5xl leading-[1.04] text-foreground motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-3 motion-safe:duration-700 sm:text-6xl">
+          {title}
+        </h1>
 
-            <div className="space-y-4">
-              <h1 className="motion-reduce:animate-none motion-reduce:transition-none animate-in fade-in slide-in-from-bottom-3 duration-700 text-balance text-4xl font-semibold tracking-tight sm:text-5xl">
-                {title}
-              </h1>
-              <p className="motion-reduce:animate-none motion-reduce:transition-none animate-in fade-in slide-in-from-bottom-4 duration-700 max-w-xl text-pretty text-base leading-relaxed text-muted-foreground sm:text-lg">
-                {description}
-              </p>
-            </div>
+        <p className="mx-auto mt-5 max-w-xl text-pretty text-lg leading-relaxed text-muted-foreground motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-4 motion-safe:duration-700">
+          {description}
+        </p>
 
-            <div className="motion-reduce:animate-none motion-reduce:transition-none animate-in fade-in slide-in-from-bottom-5 duration-700 flex flex-col gap-3 sm:flex-row sm:items-center">
-              {primaryCta ? (
-                <Button asChild>
-                  <Link href={primaryCta.href}>{primaryCta.label}</Link>
-                </Button>
-              ) : null}
-              {secondaryCta ? (
-                <Button asChild variant="outline">
-                  <Link href={secondaryCta.href}>{secondaryCta.label}</Link>
-                </Button>
-              ) : null}
-            </div>
-
-            {children ? (
-              <div className="motion-reduce:animate-none motion-reduce:transition-none animate-in fade-in duration-700 pt-2">
-                {children}
-              </div>
-            ) : null}
-          </div>
-
-          <div className="relative">
-            {imageSrc ? (
-              <div className="motion-reduce:animate-none motion-reduce:transition-none animate-in fade-in zoom-in-95 duration-700 relative overflow-hidden rounded-2xl border bg-card shadow-sm">
-                <Image
-                  src={imageSrc}
-                  alt={imageAlt}
-                  width={1200}
-                  height={800}
-                  className="h-auto w-full"
-                  sizes="(min-width: 1024px) 50vw, 100vw"
-                  priority
-                />
-              </div>
-            ) : (
-              <div className="motion-reduce:animate-none motion-reduce:transition-none animate-in fade-in zoom-in-95 duration-700 relative overflow-hidden rounded-2xl border bg-card shadow-sm">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-cyan-400/10" />
-                <div className="relative p-8">
-                  <div className="rounded-xl border bg-background/60 p-6 backdrop-blur">
-                    <p className="text-sm font-medium">Product preview</p>
-                    <p className="mt-2 text-sm text-muted-foreground">
-                      Drop in a screenshot or short demo video when ready.
-                    </p>
-                    <div className="mt-4 grid grid-cols-3 gap-3">
-                      <div className="h-20 rounded-lg bg-muted/60" />
-                      <div className="h-20 rounded-lg bg-muted/60" />
-                      <div className="h-20 rounded-lg bg-muted/60" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
+        <div className="mt-7 flex flex-col justify-center gap-3 motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-5 motion-safe:duration-700 sm:flex-row">
+          {primaryCta ? (
+            <Button asChild size="lg">
+              <Link href={primaryCta.href}>{primaryCta.label}</Link>
+            </Button>
+          ) : null}
+          {isCta(secondaryCta) ? (
+            <Button asChild size="lg" variant="outline">
+              <Link href={secondaryCta.href}>{secondaryCta.label}</Link>
+            </Button>
+          ) : (
+            secondaryCta
+          )}
         </div>
       </div>
+
+      <div className="mx-auto mt-14 w-4/5 max-w-[980px] pb-24 motion-safe:animate-in motion-safe:fade-in motion-safe:duration-1000">
+        <McpDemo />
+      </div>
+      {children ? <div className="mx-auto w-4/5 max-w-[1040px]">{children}</div> : null}
     </section>
   )
 }
-

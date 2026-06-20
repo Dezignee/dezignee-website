@@ -1,7 +1,7 @@
 export const siteConfig = {
   name: "Dezignee",
   description:
-    "AI-first email editor for dashboard workflows and embeddable SDKs. Generate templates and sequences with chat-first AI, then refine visually and export clean HTML.",
+    "The MCP-native email editor. Chat to draft a campaign, refine every block by hand, and export email-safe HTML — or embed the whole workflow in your product via SDK and MCP.",
   /**
    * Set `NEXT_PUBLIC_SITE_URL` in production (e.g. https://dezignee.com).
    * Used for canonical URLs, OG URLs, and sitemap/robots.
@@ -12,4 +12,3 @@ export const siteConfig = {
 export function absoluteUrl(path: string) {
   return new URL(path, siteConfig.url).toString()
 }
-

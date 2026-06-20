@@ -1,0 +1,105 @@
+/* mcp-demo.module.css — scoped styles for the homepage live MCP demo.
+   The demo is a product mock: it pins its own warm DS palette as locals on the
+   root so it renders identically regardless of light/dark site theme. */
+
+.root {
+  --d-paper: #FAF9F5;
+  --d-paper-sunk: #F2F0E9;
+  --d-surface: #FFFFFF;
+  --d-surface-2: #F5F3EE;
+  --d-surface-3: #ECE9E1;
+  --d-ink: #23211C;
+  --d-ink-soft: #4A463E;
+  --d-ink-muted: #78736A;
+  --d-ink-faint: #A8A296;
+  --d-line: #E7E3D9;
+  --d-line-strong: #D8D3C6;
+  --d-primary: #2A2823;
+  --d-primary-fg: #FAF9F5;
+  --d-accent: #D97757;
+  --d-accent-tint: #F6E7DF;
+  --d-accent-tint-2: #EFD6C9;
+  --d-success: #5E8C61;
+  --d-success-tint: #E7EFE5;
+  --d-serif: var(--font-serif), Georgia, serif;
+  --d-mono: var(--font-mono), ui-monospace, Menlo, monospace;
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  width: 100%;
+  max-width: 940px;
+  height: 460px;
+  margin: 0 auto;
+  background: var(--d-surface);
+  border: 1px solid var(--d-line-strong);
+  border-radius: 18px;
+  box-shadow: 0 12px 28px rgba(40, 34, 25, 0.1), 0 4px 8px rgba(40, 34, 25, 0.05);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.bar { height: 48px; flex-shrink: 0; display: flex; align-items: center; gap: 11px; padding: 0 15px; background: var(--d-surface-2); border-bottom: 1px solid var(--d-line); }
+.dots { display: flex; gap: 6px; }
+.dots i { width: 10px; height: 10px; border-radius: 50%; background: var(--d-line-strong); display: block; }
+.tab { display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px; font-weight: 600; color: var(--d-ink-soft); background: var(--d-surface); border: 1px solid var(--d-line); padding: 5px 12px; border-radius: 10px; }
+.tabDot { width: 6px; height: 6px; border-radius: 50%; background: var(--d-accent); }
+.spacer { flex: 1; }
+.mcp { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 600; color: var(--d-success); background: var(--d-success-tint); border: 1px solid #CFE0CB; padding: 5px 11px 5px 10px; border-radius: 9999px; }
+.pulse { width: 7px; height: 7px; border-radius: 50%; background: var(--d-success); animation: pulse 1.8s var(--ease) infinite; }
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(94,140,97,.5); } 70% { box-shadow: 0 0 0 6px rgba(94,140,97,0); } 100% { box-shadow: 0 0 0 0 rgba(94,140,97,0); } }
+
+.main { flex: 1; min-height: 0; display: grid; grid-template-columns: 1fr 320px; }
+
+.canvas { min-width: 0; overflow: hidden; padding: 26px 28px 0; display: flex; justify-content: center; background-color: var(--d-surface); background-image: radial-gradient(circle, rgba(120,115,106,0.16) 1px, transparent 1px); background-size: 20px 20px; }
+.email { width: 100%; max-width: 320px; align-self: flex-start; background: #fff; border: 1px solid var(--d-line); border-radius: 10px; box-shadow: 0 4px 12px rgba(40,34,25,.07); padding: 22px 24px 26px; display: flex; flex-direction: column; gap: 14px; min-height: 130px; }
+.empty { width: 100%; text-align: center; color: var(--d-ink-faint); font-size: 13px; padding: 26px 0; }
+.logo { display: flex; align-items: center; gap: 8px; }
+.logoMark { width: 22px; height: 22px; border-radius: 6px; background: var(--d-primary); color: #fff; display: flex; align-items: center; justify-content: center; font-family: var(--d-serif); font-weight: 600; font-size: 13px; }
+.logoWord { font-family: var(--d-serif); font-size: 15px; font-weight: 600; color: var(--d-ink); }
+.logoWord b { color: var(--d-accent); }
+.emailH { margin: 0; font-family: var(--d-serif); font-size: 23px; line-height: 1.16; font-weight: 600; letter-spacing: -.01em; color: #23211C; }
+.emailP { margin: 0; font-size: 12.5px; line-height: 1.6; color: #4A463E; }
+.btnWrap { position: relative; align-self: flex-start; }
+.btn { display: inline-block; background: var(--d-primary); color: #fff; font-size: 12.5px; font-weight: 600; padding: 10px 18px; border-radius: 9px; white-space: nowrap; transition: background 260ms var(--ease); }
+.btnAccent { background: var(--d-accent); }
+.sel { position: absolute; inset: -5px; border: 2.5px solid var(--d-accent); border-radius: 12px; pointer-events: none; animation: fade .2s var(--ease-out); }
+.selTag { position: absolute; top: -10px; left: -2.5px; transform: translateY(-100%); display: inline-flex; align-items: center; gap: 4px; font-size: 10.5px; font-weight: 600; color: #fff; background: var(--d-accent); padding: 3px 7px 3px 4px; border-radius: 6px; white-space: nowrap; }
+
+.chat { display: flex; flex-direction: column; min-height: 0; background: var(--d-surface-2); border-left: 1px solid var(--d-line); }
+.chatHead { flex-shrink: 0; display: flex; align-items: center; gap: 8px; padding: 13px 16px; border-bottom: 1px solid var(--d-line); font-size: 13px; font-weight: 600; color: var(--d-ink); }
+.chatHead svg { color: var(--d-accent); }
+.chatScroll { flex: 1; min-height: 0; overflow: hidden; padding: 15px 14px 6px; display: flex; flex-direction: column; gap: 12px; }
+.msg { display: flex; flex-direction: column; gap: 6px; max-width: 88%; }
+.msgUser { align-self: flex-end; align-items: flex-end; }
+.msgAssistant { align-self: flex-start; align-items: flex-start; }
+.bub { font-size: 12.5px; line-height: 1.45; padding: 9px 12px; border-radius: 13px; }
+.msgUser .bub { background: var(--d-primary); color: var(--d-primary-fg); border-bottom-right-radius: 5px; }
+.msgAssistant .bub { background: var(--d-surface); color: var(--d-ink-soft); border: 1px solid var(--d-line); border-bottom-left-radius: 5px; }
+.tool { display: inline-flex; align-items: center; gap: 7px; background: var(--d-surface); border: 1px solid var(--d-line); border-radius: 9999px; padding: 4px 10px 4px 6px; font-family: var(--d-mono); font-size: 10.5px; color: var(--d-ink-muted); }
+.toolIco { display: inline-flex; color: var(--d-accent); }
+.toolDone .toolIco { color: var(--d-success); }
+.toolName { color: var(--d-ink-soft); font-weight: 500; }
+.toolSep { margin: 0 4px; color: var(--d-ink-faint); }
+.toolState { color: var(--d-ink-faint); }
+.toolDone .toolState { color: var(--d-success); }
+.ring { width: 11px; height: 11px; border-radius: 50%; border: 2px solid var(--d-accent-tint-2); border-top-color: var(--d-accent); display: inline-block; animation: spin .7s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.chatInput { flex-shrink: 0; display: flex; align-items: center; gap: 8px; margin: 6px 12px 12px; background: var(--d-surface); border: 1px solid var(--d-line-strong); border-radius: 14px; padding: 9px 9px 9px 13px; }
+.ph { flex: 1; font-size: 12px; color: var(--d-ink-faint); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.send { width: 28px; height: 28px; border-radius: 8px; background: var(--d-primary); color: var(--d-primary-fg); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+
+.in { animation: up .36s var(--ease-out); }
+@keyframes up { from { transform: translateY(9px); } to { transform: none; } }
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .in { animation: none; }
+}
+
+@media (max-width: 880px) {
+  .main { grid-template-columns: 1fr; }
+  .chat { display: none; }
+  .root { height: 380px; }
+}

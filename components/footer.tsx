@@ -1,8 +1,8 @@
-import Image from "next/image"
 import Link from "next/link"
 import { Github, Twitter } from "lucide-react"
 
 import { cn } from "@/lib/utils"
+import { BrandLockup } from "@/components/navbar"
 
 const columns = [
   {
@@ -10,20 +10,24 @@ const columns = [
     links: [
       { href: "/features", label: "Features" },
       { href: "/pricing", label: "Pricing" },
-      { href: "/docs", label: "Docs" },
+      { href: "/templates", label: "Templates" },
+      { href: "/changelog", label: "Changelog" },
     ],
   },
   {
-    title: "Resources",
+    title: "Developers",
     links: [
-      { href: "/blog", label: "Blog" },
-      { href: "/docs", label: "Quick start" },
+      { href: "/docs", label: "Docs" },
+      { href: "/docs/mcp", label: "MCP servers" },
+      { href: "/docs/sdk", label: "SDK" },
+      { href: "/docs/api", label: "API reference" },
     ],
   },
   {
     title: "Company",
     links: [
       { href: "/about", label: "About" },
+      { href: "/blog", label: "Blog" },
       { href: "/contact", label: "Contact" },
     ],
   },
@@ -38,55 +42,43 @@ const columns = [
 
 export function Footer({ className }: { className?: string }) {
   return (
-    <footer className={cn("border-t bg-background", className)}>
-      <div className="container py-12">
-        <div className="grid gap-10 md:grid-cols-[1.2fr_2fr]">
-          <div className="space-y-4">
-            <Link href="/" className="flex items-center gap-2">
-              <Image
-                src="/dezignee_logo.svg"
-                alt="Dezignee"
-                width={28}
-                height={28}
-                sizes="28px"
-              />
-              <span className="text-sm font-semibold tracking-tight">
-                Dezignee
-              </span>
-            </Link>
-            <p className="max-w-sm text-sm text-muted-foreground">
-              AI-first email creation for teams and developers. Generate sequences
-              instantly, then fine-tune with a visual editor and ship HTML
-              anywhere.
+    <footer className={cn("border-t border-border bg-background", className)}>
+      <div className="mx-auto w-4/5 max-w-[1040px] py-16">
+        <div className="grid gap-12 md:grid-cols-[1.4fr_2.6fr]">
+          <div className="max-w-xs space-y-4">
+            <BrandLockup />
+            <p className="text-sm leading-relaxed text-muted-foreground">
+              The MCP-native email editor. Draft with AI, refine by hand, and
+              export email-safe HTML — or embed the whole workflow in your product.
             </p>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2.5 pt-1">
               <a
                 href="#"
-                className="text-muted-foreground hover:text-foreground"
-                aria-label="Twitter"
+                aria-label="X"
+                className="flex size-9 items-center justify-center rounded-md border border-border text-muted-foreground transition-colors hover:border-input hover:text-foreground"
               >
-                <Twitter className="size-5" />
+                <Twitter className="size-4" />
               </a>
               <a
                 href="#"
-                className="text-muted-foreground hover:text-foreground"
                 aria-label="GitHub"
+                className="flex size-9 items-center justify-center rounded-md border border-border text-muted-foreground transition-colors hover:border-input hover:text-foreground"
               >
-                <Github className="size-5" />
+                <Github className="size-4" />
               </a>
             </div>
           </div>
 
           <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
             {columns.map((col) => (
-              <div key={col.title} className="space-y-3">
-                <p className="text-sm font-medium">{col.title}</p>
-                <ul className="space-y-2 text-sm">
+              <div key={col.title} className="space-y-3.5">
+                <p className="text-sm font-semibold text-foreground">{col.title}</p>
+                <ul className="space-y-2.5">
                   {col.links.map((l) => (
                     <li key={l.href}>
                       <Link
                         href={l.href}
-                        className="text-muted-foreground hover:text-foreground"
+                        className="text-sm text-muted-foreground transition-colors hover:text-foreground"
                       >
                         {l.label}
                       </Link>
@@ -98,16 +90,11 @@ export function Footer({ className }: { className?: string }) {
           </div>
         </div>
 
-        <div className="mt-10 flex flex-col gap-3 border-t pt-6 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
-          <p>
-            © {new Date().getFullYear()} Dezignee. All rights reserved.
-          </p>
-          <p>
-            Built for embeddable SDKs and dashboard workflows.
-          </p>
+        <div className="mt-12 flex flex-col gap-3 border-t border-border pt-6 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
+          <p>© {new Date().getFullYear()} Dezignee. All rights reserved.</p>
+          <p>Made for real inboxes.</p>
         </div>
       </div>
     </footer>
   )
 }
-
