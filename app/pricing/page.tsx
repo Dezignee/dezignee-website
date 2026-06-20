@@ -1,354 +1,207 @@
-import Link from "next/link"
 import type { Metadata } from "next"
+import * as React from "react"
+import Link from "next/link"
 import { Check, Minus } from "lucide-react"
 
-import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Hero } from "@/components/sections/hero"
-import { PricingCard } from "@/components/sections/pricing-card"
+import { Reveal } from "@/components/reveal"
+import { PageHeader } from "@/components/sections/page-header"
+import { PricingPlans } from "@/components/sections/pricing-plans"
 
 export const metadata: Metadata = {
   title: "Pricing",
   description:
-    "Choose a plan for dashboard workflows, then add embeddable SDK tiers for plugin use cases.",
-  alternates: {
-    canonical: "/pricing",
-  },
+    "Start free with 50 credits a day. Paid plans from $99/mo meter AI usage in credits and never block you — overage is simple pay-as-you-go.",
+  alternates: { canonical: "/pricing" },
 }
 
-const tiers = [
+/* comparison rows — cell value: true | false | string */
+type Row = { label: string; free: boolean | string; pro: boolean | string; growth: boolean | string; business: boolean | string }
+const GROUPS: { title: string; rows: Row[] }[] = [
   {
-    name: "Free",
-    price: "$0",
-    period: "mo",
-    description: "Explore the editor and generate a few templates.",
-    features: [
-      "AI draft generation (limited)",
-      "Single-template workflows",
-      "Basic export (HTML)",
-      "Community support",
+    title: "AI & credits",
+    rows: [
+      { label: "Included AI credits", free: "50 / day", pro: "2,500 / mo", growth: "10,000 / mo", business: "25,000 / mo" },
+      { label: "Overage rate", free: "—", pro: "$0.03", growth: "$0.025", business: "$0.02" },
+      { label: "Credit add-on buckets", free: false, pro: true, growth: true, business: true },
+      { label: "Bring your own OpenAI key", free: false, pro: false, growth: false, business: true },
     ],
-    cta: { href: "/contact", label: "Start Free" },
   },
   {
-    name: "Pro",
-    price: "$29",
-    period: "mo",
-    description: "For makers and teams shipping campaigns weekly.",
-    features: [
-      "Higher AI + export limits",
-      "Sequences (multi-step campaigns)",
-      "Reusable blocks and layouts",
-      "Priority email support",
+    title: "Editor & creation",
+    rows: [
+      { label: "Visual block editor", free: true, pro: true, growth: true, business: true },
+      { label: "Merge tags & preview", free: true, pro: true, growth: true, business: true },
+      { label: "Email-safe HTML export", free: true, pro: true, growth: true, business: true },
+      { label: "Sequences (multi-step)", free: false, pro: true, growth: true, business: true },
+      { label: "Asset library & version history", free: false, pro: true, growth: true, business: true },
     ],
-    highlighted: true,
-    badge: "Most popular",
-    cta: { href: "/contact", label: "Get Pro" },
-    footnote: <>No credit card required to start.</>,
   },
   {
-    name: "Business",
-    price: "Custom",
-    period: "",
-    description: "For scaling teams and embedded product workflows.",
-    features: [
-      "Unlimited projects (negotiated)",
-      "Team collaboration + governance",
-      "SLAs & priority support",
-      "Security + compliance options",
+    title: "Developers & teams",
+    rows: [
+      { label: "API access & webhooks", free: false, pro: true, growth: true, business: true },
+      { label: "MCP servers", free: false, pro: false, growth: true, business: true },
+      { label: "Workspaces", free: "1", pro: "1", growth: "Multiple", business: "Multiple" },
+      { label: "Audit log & governance", free: false, pro: false, growth: false, business: true },
+      { label: "Support", free: "Community", pro: "Email", growth: "Priority", business: "Dedicated" },
     ],
-    cta: { href: "/contact", label: "Talk to sales" },
   },
-] as const
+]
 
-const embedAddOns = [
+const FAQ = [
   {
-    name: "Embeddable — Basic",
-    price: "+$49",
-    period: "mo",
-    description: "Embed the editor for a single product/app.",
-    features: [
-      "SDK embed for one domain",
-      "Programmatic HTML export",
-      "MCP tools enabled",
-      "Standard support",
-    ],
-    cta: { href: "/docs", label: "Read SDK docs" },
+    q: "What's a credit?",
+    a: "Credits meter AI usage — chat drafting, suggestions, and image generation. Routine manual editing in the block editor doesn't spend credits.",
   },
   {
-    name: "Embeddable — Advanced",
-    price: "+$149",
-    period: "mo",
-    description: "For platforms and plugins shipping at scale.",
-    features: [
-      "Multiple environments (dev/stage/prod)",
-      "Advanced theming + branding hooks",
-      "Usage analytics (basic)",
-      "Priority support",
-    ],
-    highlighted: true,
-    badge: "Best for platforms",
-    cta: { href: "/contact", label: "Discuss embedding" },
+    q: "What happens when I run out?",
+    a: "On Free, credits reset the next day. On paid plans they reset monthly, and you're never blocked: extra usage bills as simple pay-as-you-go overage, or you can add a credit bucket.",
   },
   {
-    name: "Embeddable — Enterprise",
-    price: "Custom",
-    period: "",
-    description: "Enterprise embedding with custom terms.",
-    features: [
-      "Custom domains + SSO options",
-      "Dedicated support channel",
-      "Security review + compliance support",
-      "Commercial SLAs",
-    ],
-    cta: { href: "/contact", label: "Request a quote" },
+    q: "How does annual billing work?",
+    a: "Annual plans are billed once a year for the price of about ten months — roughly 17% off versus paying monthly.",
   },
-] as const
+  {
+    q: "Can I bring my own OpenAI key?",
+    a: "Yes, on Business. Connect your own key so AI generation runs on your account instead of metered Dezignee credits.",
+  },
+  {
+    q: "Can I embed the editor in my product?",
+    a: "Yes. The plugin SDK and MCP servers are available on paid plans — see the developer docs for the integration tracks.",
+  },
+  {
+    q: "Do I need a credit card to start?",
+    a: "No. The Free plan is free forever with 50 credits a day — no card required.",
+  },
+]
 
-const featureRows = [
-  { label: "AI template drafting", free: true, pro: true, business: true },
-  { label: "Visual editor + manual tweaks", free: true, pro: true, business: true },
-  { label: "Email sequences", free: false, pro: true, business: true },
-  { label: "Reusable blocks", free: false, pro: true, business: true },
-  { label: "Team collaboration", free: false, pro: false, business: true },
-  { label: "Governance + admin controls", free: false, pro: false, business: true },
-  { label: "Priority support", free: false, pro: true, business: true },
-] as const
-
-function CheckCell({ value }: { value: boolean }) {
-  return (
-    <div className="flex justify-center">
-      {value ? (
-        <Check className="size-4 text-primary" aria-label="Included" />
-      ) : (
-        <Minus className="size-4 text-muted-foreground" aria-label="Not included" />
-      )}
-    </div>
-  )
+function Cell({ v }: { v: boolean | string }) {
+  if (v === true) return <Check className="mx-auto size-[18px] text-success" aria-label="Included" />
+  if (v === false) return <Minus className="mx-auto size-[18px] text-muted-foreground/40" aria-label="Not included" />
+  return <span className="text-sm text-foreground/80">{v}</span>
 }
 
 export default function PricingPage() {
   return (
     <>
-      <Hero
-        badge="Pricing"
-        title={
-          <>
-            Plans for teams—and{" "}
-            <span className="bg-gradient-to-r from-primary via-cyan-400 to-primary bg-clip-text text-transparent">
-              add-ons for embedding
-            </span>
-            .
-          </>
-        }
-        description={
-          <>
-            Use Dezignee in the dashboard, or embed it in your product via SDK.
-            Start with a plan, then add embeddable tiers when you need them.
-          </>
-        }
-        primaryCta={{ href: "/contact", label: "Get Started" }}
-        secondaryCta={{ href: "/docs", label: "SDK Quick Start" }}
-      >
-        <div className="flex flex-wrap justify-center gap-2">
-          {["Monthly plans", "Embeddable SDK add-ons", "HTML export"].map((item) => (
-            <span
-              key={item}
-              className="rounded-full border bg-background/60 px-3 py-1 text-xs text-muted-foreground"
-            >
-              {item}
-            </span>
-          ))}
-        </div>
-      </Hero>
+      <PageHeader
+        eyebrow="Pricing"
+        title={<>Start free. Scale by credits.</>}
+        description="AI usage is metered in credits — and paid plans never block you. Pick a tier, switch to annual to save, and top up with buckets any time."
+      />
 
-      <section className="border-t bg-background">
-        <div className="container py-16 sm:py-20">
-          <header className="mx-auto max-w-2xl text-center">
-            <p className="text-xs font-semibold uppercase tracking-wide text-primary">
-              Dashboard plans
-            </p>
-            <h2 className="mt-3 text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
-              Choose a plan that matches your workflow.
-            </h2>
-            <p className="mt-4 text-pretty text-base leading-relaxed text-muted-foreground sm:text-lg">
-              Pricing below is placeholder—swap in real numbers anytime. The
-              page layout is ready for a full feature matrix and FAQ.
-            </p>
-          </header>
-
-          <div className="mt-10 grid gap-6 lg:grid-cols-3">
-            {tiers.map((tier) => (
-              <PricingCard
-                key={tier.name}
-                name={tier.name}
-                price={tier.price}
-                period={tier.period}
-                description={tier.description}
-                features={[...tier.features]}
-                cta={tier.cta}
-                highlighted={"highlighted" in tier ? tier.highlighted : false}
-                badge={"badge" in tier ? tier.badge : undefined}
-                footnote={"footnote" in tier ? tier.footnote : undefined}
-              />
-            ))}
-          </div>
+      {/* plans */}
+      <section className="border-b border-border">
+        <div className="mx-auto w-4/5 max-w-[1040px] py-16">
+          <PricingPlans />
         </div>
       </section>
 
-      <section className="border-t bg-muted/10">
-        <div className="container py-16 sm:py-20">
+      {/* comparison */}
+      <section className="border-b border-border">
+        <div className="mx-auto w-4/5 max-w-[1040px] py-20">
           <header className="mx-auto max-w-2xl text-center">
-            <p className="text-xs font-semibold uppercase tracking-wide text-primary">
-              Embeddable add-ons
-            </p>
-            <h2 className="mt-3 text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
-              Embed Dezignee in your app with an SDK tier.
-            </h2>
-            <p className="mt-4 text-pretty text-base leading-relaxed text-muted-foreground sm:text-lg">
-              Add an embeddable tier to any plan to unlock SDK-based embedding
-              and developer tooling (including MCP workflows).
-            </p>
-          </header>
-
-          <div className="mt-10 grid gap-6 lg:grid-cols-3">
-            {embedAddOns.map((addon) => (
-              <PricingCard
-                key={addon.name}
-                name={addon.name}
-                price={addon.price}
-                period={addon.period}
-                description={addon.description}
-                features={[...addon.features]}
-                cta={addon.cta}
-                highlighted={"highlighted" in addon ? addon.highlighted : false}
-                badge={"badge" in addon ? addon.badge : undefined}
-              />
-            ))}
-          </div>
-
-          <div className="mt-10 rounded-2xl border bg-card p-6 shadow-sm">
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-              <div>
-                <p className="text-sm font-semibold tracking-tight">
-                  Not sure which embedding tier you need?
-                </p>
-                <p className="mt-1 text-sm text-muted-foreground">
-                  Tell us your product workflow and we’ll recommend the fastest
-                  path.
-                </p>
-              </div>
-              <Button asChild variant="outline">
-                <Link href="/contact">Talk to us</Link>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="border-t bg-background">
-        <div className="container py-16 sm:py-20">
-          <header className="mx-auto max-w-2xl text-center">
-            <p className="text-xs font-semibold uppercase tracking-wide text-primary">
+            <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.04em] text-muted-foreground">
+              <span className="size-1.5 rounded-full bg-terracotta" aria-hidden="true" />
               Compare plans
             </p>
-            <h2 className="mt-3 text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
-              A quick feature matrix.
+            <h2 className="font-display mt-3.5 text-balance text-[34px] leading-[1.12] text-foreground sm:text-[38px]">
+              Every detail, side by side.
             </h2>
-            <p className="mt-4 text-pretty text-base leading-relaxed text-muted-foreground sm:text-lg">
-              Expand this table over time as your product surface grows.
-            </p>
           </header>
 
-          <div className="mt-10 overflow-hidden rounded-2xl border bg-card shadow-sm">
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead className="bg-muted/30">
-                  <tr className="text-left">
-                    <th className="px-4 py-3 font-medium">Feature</th>
-                    <th className="px-4 py-3 text-center font-medium">Free</th>
-                    <th className="px-4 py-3 text-center font-medium">
-                      <span className="inline-flex items-center gap-2">
-                        Pro{" "}
-                        <Badge variant="secondary" className="border-primary/20">
-                          Popular
-                        </Badge>
-                      </span>
+          <div className="mt-12 overflow-x-auto">
+            <table className="w-full min-w-[720px] border-collapse text-left">
+              <thead>
+                <tr>
+                  <th className="w-[34%] pb-4 pr-4 align-bottom" />
+                  {["Free", "Pro", "Growth", "Business"].map((n) => (
+                    <th key={n} className="pb-4 text-center align-bottom">
+                      <span className="text-[15px] font-semibold text-foreground">{n}</span>
                     </th>
-                    <th className="px-4 py-3 text-center font-medium">
-                      Business
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y">
-                  {featureRows.map((row) => (
-                    <tr key={row.label} className="bg-background">
-                      <td className="px-4 py-3 text-muted-foreground">
-                        {row.label}
-                      </td>
-                      <td className="px-4 py-3">
-                        <CheckCell value={row.free} />
-                      </td>
-                      <td className="px-4 py-3">
-                        <CheckCell value={row.pro} />
-                      </td>
-                      <td className="px-4 py-3">
-                        <CheckCell value={row.business} />
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {GROUPS.map((g) => (
+                  <React.Fragment key={g.title}>
+                    <tr>
+                      <td
+                        colSpan={5}
+                        className="border-t border-border pb-2 pt-6 text-xs font-semibold uppercase tracking-[0.04em] text-muted-foreground"
+                      >
+                        {g.title}
                       </td>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                    {g.rows.map((r) => (
+                      <tr key={r.label} className="border-t border-border/60">
+                        <td className="py-3 pr-4 text-sm text-muted-foreground">{r.label}</td>
+                        <td className="py-3 text-center"><Cell v={r.free} /></td>
+                        <td className="py-3 text-center"><Cell v={r.pro} /></td>
+                        <td className="py-3 text-center"><Cell v={r.growth} /></td>
+                        <td className="py-3 text-center"><Cell v={r.business} /></td>
+                      </tr>
+                    ))}
+                  </React.Fragment>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       </section>
 
-      <section className="border-t bg-background">
-        <div className="container py-16 sm:py-20">
+      {/* FAQ */}
+      <section className="border-b border-border">
+        <div className="mx-auto w-4/5 max-w-[1040px] py-20">
           <header className="mx-auto max-w-2xl text-center">
-            <p className="text-xs font-semibold uppercase tracking-wide text-primary">
+            <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.04em] text-muted-foreground">
+              <span className="size-1.5 rounded-full bg-terracotta" aria-hidden="true" />
               FAQ
             </p>
-            <h2 className="mt-3 text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
-              Common pricing questions.
+            <h2 className="font-display mt-3.5 text-balance text-[34px] leading-[1.12] text-foreground sm:text-[38px]">
+              Questions, answered.
             </h2>
-            <p className="mt-4 text-pretty text-base leading-relaxed text-muted-foreground sm:text-lg">
-              Replace answers with your real policies when ready.
-            </p>
           </header>
-
-          <div className="mx-auto mt-10 max-w-3xl space-y-3">
-            {[
-              {
-                q: "Can I use the embeddable SDK without a dashboard plan?",
-                a: "Typically you’ll start with a plan, then add an embeddable tier for SDK usage. If you have a special case, contact us and we’ll tailor it.",
-              },
-              {
-                q: "Do you offer yearly billing or discounts?",
-                a: "Yes—annual billing and volume discounts are available on Business and embedding tiers.",
-              },
-              {
-                q: "What does “MCP integration” mean here?",
-                a: "It means developer-friendly tooling and primitives to automate template generation, sequence creation, and exports using MCP-compatible workflows.",
-              },
-            ].map((item) => (
-              <details
-                key={item.q}
-                className="group rounded-2xl border bg-card p-6 shadow-sm"
-              >
-                <summary className="cursor-pointer list-none text-sm font-semibold tracking-tight">
-                  {item.q}
-                </summary>
-                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                  {item.a}
-                </p>
-              </details>
+          <div className="mx-auto mt-12 grid max-w-3xl gap-x-10 gap-y-8 sm:grid-cols-2">
+            {FAQ.map((f) => (
+              <div key={f.q}>
+                <h3 className="text-[15px] font-semibold text-foreground">{f.q}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{f.a}</p>
+              </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section>
+        <div className="mx-auto w-4/5 max-w-[1040px] py-20">
+          <Reveal>
+            <div className="overflow-hidden rounded-3xl bg-primary px-10 py-14 text-center">
+              <h2 className="font-display text-balance text-[34px] leading-[1.1] text-primary-foreground">
+                Try it free — 50 credits a day.
+              </h2>
+              <p className="mx-auto mt-4 max-w-md text-lg text-primary-foreground/60">
+                No credit card. Upgrade when your sending picks up.
+              </p>
+              <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
+                <Button asChild size="lg" className="bg-background text-foreground hover:bg-background/90">
+                  <Link href="/pricing">Start free</Link>
+                </Button>
+                <Button
+                  asChild
+                  size="lg"
+                  variant="outline"
+                  className="border-primary-foreground/25 bg-transparent text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"
+                >
+                  <Link href="/contact">Talk to us</Link>
+                </Button>
+              </div>
+            </div>
+          </Reveal>
         </div>
       </section>
     </>
   )
 }
-
