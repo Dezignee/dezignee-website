@@ -18,13 +18,12 @@ export default function Icon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          backgroundColor: "#030213",
-          backgroundImage:
-            "radial-gradient(circle at 30% 25%, rgba(6,182,212,0.55) 0%, rgba(6,182,212,0) 60%)",
-          color: "white",
+          backgroundColor: "#2A2823",
+          color: "#FAF9F5",
           borderRadius: 16,
           fontSize: 34,
-          fontWeight: 800,
+          fontWeight: 700,
+          fontFamily: "serif",
         }}
       >
         D
