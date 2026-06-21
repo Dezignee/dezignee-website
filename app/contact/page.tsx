@@ -28,7 +28,7 @@ export default function ContactPage() {
       />
 
       <section className="border-b border-border">
-        <div className="mx-auto grid w-4/5 max-w-[1040px] items-start gap-12 py-20 lg:grid-cols-2">
+        <div className="site-rail grid items-start gap-12 py-20 lg:grid-cols-2">
           {/* left: channels + what to include */}
           <div>
             <h2 className="font-display text-[28px] leading-[1.14] text-foreground">Talk to the team</h2>

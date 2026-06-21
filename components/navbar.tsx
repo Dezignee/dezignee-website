@@ -58,7 +58,7 @@ export function Navbar() {
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-background">
       {/* Narrowed bar: content sits in an 80% / max-1040px centered rail. */}
-      <div className="mx-auto flex h-16 w-4/5 max-w-[1040px] items-center justify-between gap-6">
+      <div className="site-rail flex h-16 items-center justify-between gap-6">
         <BrandLockup />
 
         <nav className="hidden items-center gap-0.5 md:flex" aria-label="Primary">
@@ -119,7 +119,7 @@ export function Navbar() {
             exit={reduceMotion ? undefined : { opacity: 0, height: 0 }}
             transition={reduceMotion ? undefined : { duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
           >
-            <nav className="mx-auto flex w-4/5 max-w-[1040px] flex-col gap-1 py-3" aria-label="Mobile">
+            <nav className="site-rail flex flex-col gap-1 py-3" aria-label="Mobile">
               {navItems.map((item) => {
                 const isActive =
                   pathname === item.href || pathname?.startsWith(`${item.href}/`)

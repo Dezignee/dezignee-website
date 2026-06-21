@@ -5,84 +5,60 @@
 /* ============================================================================
    Dezignee Design System — re-skin of the marketing site
    Warm paper / near-black primary / terracotta accent (used sparingly).
-   shadcn tokens are expressed as HSL triplets derived from the DS hexes in
-   _ds/colors_and_type.css. Fonts are wired via next/font in app/layout.tsx
-   (--font-sans / --font-serif / --font-mono).
-   (Phase 1 tokens + Phase 5 polish layer.)
+   (Phase 1 tokens + Phase 5 polish layer + MOBILE HOTFIX.)
    ============================================================================ */
 
 @layer base {
   :root {
-    --background: 48 33% 97%;        /* paper   #FAF9F5 */
-    --foreground: 43 11% 12%;        /* ink     #23211C */
-
-    --card: 0 0% 100%;               /* surface #FFFFFF */
+    --background: 48 33% 97%;
+    --foreground: 43 11% 12%;
+    --card: 0 0% 100%;
     --card-foreground: 43 11% 12%;
-
     --popover: 0 0% 100%;
     --popover-foreground: 43 11% 12%;
-
-    --primary: 43 9% 15%;            /* near-black #2A2823 */
+    --primary: 43 9% 15%;
     --primary-foreground: 48 33% 97%;
-
-    --secondary: 43 26% 95%;         /* surface-2 #F5F3EE */
+    --secondary: 43 26% 95%;
     --secondary-foreground: 43 11% 12%;
-
     --muted: 43 26% 95%;
-    --muted-foreground: 38 8% 44%;   /* ink-muted #78736A */
-
-    --accent: 44 22% 90%;            /* surface-3 #ECE9E1 — subtle hover bg */
+    --muted-foreground: 38 8% 44%;
+    --accent: 44 22% 90%;
     --accent-foreground: 43 11% 12%;
-
-    /* Terracotta — the DS accent. NOT mapped to shadcn `accent` (that stays a
-       quiet hover surface); exposed separately so it is used deliberately. */
-    --terracotta: 15 63% 60%;        /* #D97757 */
+    --terracotta: 15 63% 60%;
     --terracotta-foreground: 0 0% 100%;
-    --terracotta-tint: 21 56% 92%;   /* #F6E7DF */
-
-    --success: 122 19% 46%;          /* #5E8C61 */
-    --warning: 33 52% 50%;           /* #C2843E */
-    --destructive: 8 52% 49%;        /* brick #BC4B3C */
+    --terracotta-tint: 21 56% 92%;
+    --success: 122 19% 46%;
+    --warning: 33 52% 50%;
+    --destructive: 8 52% 49%;
     --destructive-foreground: 0 0% 100%;
-
-    --border: 43 23% 88%;            /* line #E7E3D9 */
+    --border: 43 23% 88%;
     --input: 43 23% 88%;
-    --ring: 15 63% 60%;              /* terracotta focus ring */
-
-    --radius: 0.875rem;              /* 14px — DS radius-lg */
+    --ring: 15 63% 60%;
+    --radius: 0.875rem;
   }
 
   .dark {
-    --background: 40 13% 9%;         /* warm charcoal */
+    --background: 40 13% 9%;
     --foreground: 48 33% 97%;
-
     --card: 43 11% 12%;
     --card-foreground: 48 33% 97%;
-
     --popover: 43 11% 12%;
     --popover-foreground: 48 33% 97%;
-
-    --primary: 40 30% 96%;           /* warm near-white in dark */
+    --primary: 40 30% 96%;
     --primary-foreground: 43 11% 12%;
-
     --secondary: 43 9% 17%;
     --secondary-foreground: 48 33% 97%;
-
     --muted: 43 9% 17%;
     --muted-foreground: 40 11% 62%;
-
     --accent: 43 9% 20%;
     --accent-foreground: 48 33% 97%;
-
     --terracotta: 15 63% 62%;
     --terracotta-foreground: 0 0% 100%;
     --terracotta-tint: 18 18% 22%;
-
     --success: 122 22% 58%;
     --warning: 33 55% 60%;
     --destructive: 8 55% 55%;
     --destructive-foreground: 0 0% 100%;
-
     --border: 40 9% 19%;
     --input: 40 9% 19%;
     --ring: 15 63% 62%;
@@ -97,7 +73,6 @@
     @apply bg-background text-foreground;
     font-family: var(--font-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   }
-  /* Serif display for marketing headings (override per-element with font-sans). */
   .font-display {
     font-family: var(--font-serif), Georgia, "Times New Roman", serif;
     font-weight: 500;
@@ -105,39 +80,68 @@
   }
 
   /* ---- Phase 5 polish ---- */
-
-  /* Smooth in-page anchor scrolling; offset for the 64px sticky navbar. */
   html {
     scroll-behavior: smooth;
     scroll-padding-top: 5rem;
   }
-
-  /* Warm text selection (matches the DS terracotta tint). */
   ::selection {
     background-color: hsl(var(--terracotta) / 0.22);
     color: hsl(var(--foreground));
   }
-
-  /* Consistent, visible focus ring on keyboard navigation only. */
   :focus-visible {
     outline: 2px solid hsl(var(--ring));
     outline-offset: 2px;
     border-radius: 4px;
   }
-
-  /* Respect users who prefer reduced motion. */
   @media (prefers-reduced-motion: reduce) {
-    html {
-      scroll-behavior: auto;
-    }
-    *,
-    *::before,
-    *::after {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
       animation-duration: 0.01ms !important;
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
       scroll-behavior: auto !important;
     }
+  }
+
+  /* ====================================================================
+     MOBILE HOTFIX
+     ==================================================================== */
+
+  /* 1) Never let anything cause sideways scrolling on small screens. */
+  html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  /* 2) Responsive page rail.
+     The pages center content with `w-4/5 max-w-[1040px]` (80% width, no
+     horizontal padding). That 80% is right on desktop but on a phone it
+     wastes ~10% on each side and crushes the content column. Below the lg
+     breakpoint we make those rails full-width with comfortable padding;
+     at >=1024px they return to the original 80% look.
+
+     This targets the existing Tailwind class directly, so the fix applies
+     even before you migrate rails to the `.site-rail` utility (below). */
+  @media (max-width: 1023.98px) {
+    .w-4\/5 {
+      width: 100% !important;
+      padding-left: 1.25rem !important;
+      padding-right: 1.25rem !important;
+    }
+  }
+  @media (min-width: 640px) and (max-width: 1023.98px) {
+    .w-4\/5 {
+      padding-left: 2rem !important;
+      padding-right: 2rem !important;
+    }
+  }
+
+  /* 3) Media that ships with a fixed pixel width (the hero MCP demo, code
+     blocks, comparison table wrappers) must never exceed the viewport. */
+  .max-w-\[1040px\],
+  .max-w-\[980px\],
+  .max-w-\[940px\] {
+    max-width: 100%;
   }
 }
 
@@ -160,5 +164,22 @@
   }
   .skip-link:focus {
     transform: translateY(0);
+  }
+
+  /* Canonical responsive page rail.
+     Optional but recommended: replace `w-4/5 max-w-[1040px]` with
+     `site-rail` on each page section so the responsive behavior is explicit
+     in the markup instead of relying on the override above. */
+  .site-rail {
+    margin-inline: auto;
+    width: 100%;
+    max-width: 1040px;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 640px) {
+    .site-rail { padding-inline: 2rem; }
+  }
+  @media (min-width: 1024px) {
+    .site-rail { width: 80%; padding-inline: 0; }
   }
 }

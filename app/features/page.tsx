@@ -81,7 +81,7 @@ function Split({
 }) {
   return (
     <section id={id} className="scroll-mt-20 border-t border-border">
-      <div className="mx-auto grid w-4/5 max-w-[1040px] items-center gap-12 py-20 lg:grid-cols-2">
+      <div className="site-rail grid items-center gap-12 py-20 lg:grid-cols-2">
         <div className={inverted ? "lg:order-2" : ""}>
           <span className="inline-flex size-11 items-center justify-center rounded-xl border border-terracotta/30 bg-terracotta-tint text-terracotta">
             <Icon className="size-5" />
@@ -287,7 +287,7 @@ export default function FeaturesPage() {
 
       {/* Also included */}
       <section className="border-t border-border">
-        <div className="mx-auto w-4/5 max-w-[1040px] py-20">
+        <div className="site-rail py-20">
           <SectionHeading eyebrow="Also included" title="The rest of the toolkit." />
           <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {ALSO.map((a) => {
@@ -306,7 +306,7 @@ export default function FeaturesPage() {
 
       {/* CTA */}
       <section>
-        <div className="mx-auto w-4/5 max-w-[1040px] py-20">
+        <div className="site-rail py-20">
           <Reveal>
             <div className="flex flex-col items-center gap-6 rounded-3xl border border-border bg-secondary px-10 py-14 text-center">
               <h2 className="font-display text-balance text-[34px] leading-[1.1] text-foreground">

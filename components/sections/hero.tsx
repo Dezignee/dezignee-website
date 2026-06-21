@@ -49,7 +49,7 @@ export function Hero({
 
   return (
     <section className={cn("relative overflow-hidden", className)}>
-      <div className="mx-auto w-4/5 max-w-[1040px] pt-[76px] text-center">
+      <div className="site-rail pt-[76px] text-center">
         {label ? (
           <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.04em] text-muted-foreground motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-2 motion-safe:duration-700">
             <span className="size-1.5 rounded-full bg-terracotta" aria-hidden="true" />
@@ -84,7 +84,7 @@ export function Hero({
       <div className="mx-auto mt-14 w-4/5 max-w-[980px] pb-24 motion-safe:animate-in motion-safe:fade-in motion-safe:duration-1000">
         <McpDemo />
       </div>
-      {children ? <div className="mx-auto w-4/5 max-w-[1040px]">{children}</div> : null}
+      {children ? <div className="site-rail">{children}</div> : null}
     </section>
   )
 }

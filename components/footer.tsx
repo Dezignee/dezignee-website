@@ -43,7 +43,7 @@ const columns = [
 export function Footer({ className }: { className?: string }) {
   return (
     <footer className={cn("border-t border-border bg-background", className)}>
-      <div className="mx-auto w-4/5 max-w-[1040px] py-16">
+      <div className="site-rail py-16">
         <div className="grid gap-12 md:grid-cols-[1.4fr_2.6fr]">
           <div className="max-w-xs space-y-4">
             <BrandLockup />

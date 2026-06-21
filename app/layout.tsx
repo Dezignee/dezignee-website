@@ -29,7 +29,14 @@ const fontMono = JetBrains_Mono({
   display: 'swap',
 })
 
+/* ▶︎ MOBILE FIX: the viewport export is what makes phones render at device
+   width instead of a zoomed-out ~980px desktop canvas. In Next 14 App Router
+   this MUST be a separate `viewport` export (not inside `metadata`), and
+   themeColor lives here too (Next warns if it's left in metadata). */
 export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  // allow pinch-zoom for accessibility — do NOT set maximumScale/userScalable
   themeColor: [
     { media: '(prefers-color-scheme: light)', color: '#FAF9F5' },
     { media: '(prefers-color-scheme: dark)', color: '#1A1814' },
@@ -81,6 +88,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${fontSans.variable} ${fontSerif.variable} ${fontMono.variable}`}
     >
       <body className="min-h-screen bg-background text-foreground antialiased">
+        {/* a11y skip link (styled in globals.css) */}
         <a href="#main-content" className="skip-link">Skip to content</a>
         <ThemeProvider
           attribute="class"

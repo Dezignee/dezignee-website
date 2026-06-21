@@ -107,7 +107,7 @@ export default function Home() {
 
       {/* Connects / trust strip */}
       <section className="border-t border-border">
-        <div className="mx-auto flex w-4/5 max-w-[1040px] flex-wrap items-center justify-center gap-x-7 gap-y-4 py-12">
+        <div className="site-rail flex flex-wrap items-center justify-center gap-x-7 gap-y-4 py-12">
           <span className="text-sm font-medium text-muted-foreground/70">Drive it from the tools you already use</span>
           <div className="flex flex-wrap items-center gap-7">
             {[
@@ -127,7 +127,7 @@ export default function Home() {
 
       {/* How it works */}
       <section className="border-t border-border">
-        <div className="mx-auto w-4/5 max-w-[1040px] py-24">
+        <div className="site-rail py-24">
           <SectionHeading eyebrow="How it works" title="From a sentence to send-ready, three moves." />
           <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {STEPS.map((s) => (
@@ -145,7 +145,7 @@ export default function Home() {
 
       {/* Features */}
       <section className="border-t border-border">
-        <div className="mx-auto w-4/5 max-w-[1040px] py-24">
+        <div className="site-rail py-24">
           <SectionHeading
             eyebrow="Features"
             title="Everything to create, refine, and ship email."
@@ -179,7 +179,7 @@ export default function Home() {
 
       {/* Developers / MCP */}
       <section className="border-t border-border">
-        <div className="mx-auto grid w-4/5 max-w-[1040px] items-center gap-12 py-24 lg:grid-cols-2">
+        <div className="site-rail grid items-center gap-12 py-24 lg:grid-cols-2">
           <div>
             <SectionHeading
               align="left"
@@ -243,7 +243,7 @@ export default function Home() {
 
       {/* Principles */}
       <section className="border-t border-border">
-        <div className="mx-auto w-4/5 max-w-[1040px] py-24">
+        <div className="site-rail py-24">
           <SectionHeading eyebrow="Why Dezignee" title="AI speed, without giving up control." />
           <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {PRINCIPLES.map((p) => {
@@ -262,7 +262,7 @@ export default function Home() {
 
       {/* Pricing teaser */}
       <section className="border-t border-border">
-        <div className="mx-auto w-4/5 max-w-[1040px] py-24">
+        <div className="site-rail py-24">
           <SectionHeading
             eyebrow="Pricing"
             title="Start free. Scale by credits."
@@ -302,7 +302,7 @@ export default function Home() {
 
       {/* Final CTA */}
       <section>
-        <div className="mx-auto w-4/5 max-w-[1040px] py-24">
+        <div className="site-rail py-24">
           <Reveal>
             <div className="overflow-hidden rounded-3xl bg-primary px-10 py-16 text-center">
               <h2 className="font-display text-balance text-[42px] leading-[1.1] text-primary-foreground">

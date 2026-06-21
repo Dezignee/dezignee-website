@@ -125,7 +125,7 @@ export default function DevelopersPage() {
 
       {/* Tracks */}
       <section id="tracks" className="scroll-mt-20 border-b border-border">
-        <div className="mx-auto w-4/5 max-w-[1040px] py-20">
+        <div className="site-rail py-20">
           <SectionHeading
             eyebrow="Integration tracks"
             title="Pick the surface that fits your stack."
@@ -154,7 +154,7 @@ export default function DevelopersPage() {
 
       {/* Embed quick start */}
       <section className="border-b border-border">
-        <div className="mx-auto grid w-4/5 max-w-[1040px] items-center gap-12 py-20 lg:grid-cols-2">
+        <div className="site-rail grid items-center gap-12 py-20 lg:grid-cols-2">
           <div>
             <SectionHeading align="left" eyebrow="Track A" title="Embed the editor in minutes." />
             <p className="mt-4 text-pretty text-[15px] leading-relaxed text-muted-foreground">
@@ -220,7 +220,7 @@ const html = await editor.exportHTML()`,
 
       {/* Command model */}
       <section id="commands" className="scroll-mt-20 border-b border-border">
-        <div className="mx-auto grid w-4/5 max-w-[1040px] items-center gap-12 py-20 lg:grid-cols-2">
+        <div className="site-rail grid items-center gap-12 py-20 lg:grid-cols-2">
           <Reveal className="lg:order-2" delay={0.05}>
             <CodeBlock
               title="POST /api/v1/emails/{id}/commands"
@@ -280,7 +280,7 @@ const html = await editor.exportHTML()`,
 
       {/* MCP servers */}
       <section id="mcp" className="scroll-mt-20 border-b border-border">
-        <div className="mx-auto w-4/5 max-w-[1040px] py-20">
+        <div className="site-rail py-20">
           <SectionHeading
             eyebrow="MCP servers"
             title="Two servers for two jobs."
@@ -391,7 +391,7 @@ const html = await editor.exportHTML()`,
 
       {/* BYO chat / auth */}
       <section id="auth" className="scroll-mt-20 border-b border-border">
-        <div className="mx-auto grid w-4/5 max-w-[1040px] items-start gap-12 py-20 lg:grid-cols-2">
+        <div className="site-rail grid items-start gap-12 py-20 lg:grid-cols-2">
           <div>
             <SectionHeading align="left" eyebrow="Track C · BYO chat" title="Stream drafts into your own UI." />
             <p className="mt-4 text-pretty text-[15px] leading-relaxed text-muted-foreground">
@@ -446,7 +446,7 @@ const html = await editor.exportHTML()`,
 
       {/* CTA */}
       <section>
-        <div className="mx-auto w-4/5 max-w-[1040px] py-20">
+        <div className="site-rail py-20">
           <Reveal>
             <div className="overflow-hidden rounded-3xl bg-primary px-10 py-14 text-center">
               <h2 className="font-display text-balance text-[34px] leading-[1.1] text-primary-foreground">

@@ -24,7 +24,7 @@ export function LegalDoc({
 }) {
   return (
     <section className="border-b border-border">
-      <div className="mx-auto w-4/5 max-w-[1040px] py-16 sm:py-20">
+      <div className="site-rail py-16 sm:py-20">
         <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.04em] text-muted-foreground">
           <span className="size-1.5 rounded-full bg-terracotta" aria-hidden="true" />
           {eyebrow}

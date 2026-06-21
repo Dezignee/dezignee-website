@@ -93,14 +93,14 @@ export default function PricingPage() {
 
       {/* plans */}
       <section className="border-b border-border">
-        <div className="mx-auto w-4/5 max-w-[1040px] py-16">
+        <div className="site-rail py-16">
           <PricingPlans />
         </div>
       </section>
 
       {/* comparison */}
       <section className="border-b border-border">
-        <div className="mx-auto w-4/5 max-w-[1040px] py-20">
+        <div className="site-rail py-20">
           <header className="mx-auto max-w-2xl text-center">
             <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.04em] text-muted-foreground">
               <span className="size-1.5 rounded-full bg-terracotta" aria-hidden="true" />
@@ -153,7 +153,7 @@ export default function PricingPage() {
 
       {/* FAQ */}
       <section className="border-b border-border">
-        <div className="mx-auto w-4/5 max-w-[1040px] py-20">
+        <div className="site-rail py-20">
           <header className="mx-auto max-w-2xl text-center">
             <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.04em] text-muted-foreground">
               <span className="size-1.5 rounded-full bg-terracotta" aria-hidden="true" />
@@ -176,7 +176,7 @@ export default function PricingPage() {
 
       {/* CTA */}
       <section>
-        <div className="mx-auto w-4/5 max-w-[1040px] py-20">
+        <div className="site-rail py-20">
           <Reveal>
             <div className="overflow-hidden rounded-3xl bg-primary px-10 py-14 text-center">
               <h2 className="font-display text-balance text-[34px] leading-[1.1] text-primary-foreground">
