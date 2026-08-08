@@ -6,7 +6,7 @@ export const siteConfig = {
    * Set `NEXT_PUBLIC_SITE_URL` in production (e.g. https://dezignee.com).
    * Used for canonical URLs, OG URLs, and sitemap/robots.
    */
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://www.dezignee.com",
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.dezignee.com",
 } as const
 
 export function absoluteUrl(path: string) {
