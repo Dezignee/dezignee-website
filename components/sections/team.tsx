@@ -1,6 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
-import { Linkedin } from "lucide-react"
+import { Linkedin, MapPin } from "lucide-react"
 
 const TEAM = [
   {
@@ -8,7 +8,7 @@ const TEAM = [
     role: "Founder",
     bio: "Building Dezignee from the ground up — product, engineering, and everything in between. Obsessed with making AI-powered tooling that developers actually want to use.",
     photo: "/team/Muneeb.png",
-    objectPosition: "50% 8%",
+    objectPosition: "center 18%",
     linkedin: "https://linkedin.com/in/muneebrehman2542",
   },
   {
@@ -16,7 +16,7 @@ const TEAM = [
     role: "Marketing Manager",
     bio: "Shapes how Dezignee shows up in the world — from launch strategy to the words on this page. Focused on reaching the developers and teams who will get the most from the product.",
     photo: "/team/Saleha.png",
-    objectPosition: "50% 10%",
+    objectPosition: "center 12%",
     linkedin: "https://linkedin.com/in/saleha-fahd-25a924294",
   },
 ]
@@ -25,7 +25,6 @@ export function Team() {
   return (
     <section className="border-t border-border">
       <div className="site-rail py-24">
-        {/* Section header */}
         <header className="mx-auto max-w-2xl text-center">
           <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.04em] text-muted-foreground">
             <span className="size-1.5 rounded-full bg-terracotta" aria-hidden="true" />
@@ -44,9 +43,9 @@ export function Team() {
           {TEAM.map((person) => (
             <article
               key={person.name}
-              className="group rounded-lg border border-border bg-card shadow-[0_1px_2px_rgba(40,34,25,0.05)] transition-all motion-safe:hover:-translate-y-0.5 hover:border-input hover:shadow-[0_4px_12px_rgba(40,34,25,0.07)]"
+              className="rounded-lg border border-border bg-card shadow-[0_1px_2px_rgba(40,34,25,0.05)] transition-all motion-safe:hover:-translate-y-0.5 hover:border-input hover:shadow-[0_4px_12px_rgba(40,34,25,0.07)]"
             >
-              {/* 4:5 portrait photo */}
+              {/* 4:5 portrait — objectPosition is tuned per image so faces land in the upper third */}
               <div className="relative aspect-[4/5] overflow-hidden rounded-t-lg">
                 <Image
                   src={person.photo}
@@ -58,16 +57,11 @@ export function Team() {
                 />
               </div>
 
-              {/* Card body */}
               <div className="p-5">
                 <div className="flex items-start justify-between gap-3">
                   <div>
-                    <h3 className="font-display text-xl text-foreground">
-                      {person.name}
-                    </h3>
-                    <p className="mt-0.5 text-sm font-medium text-terracotta">
-                      {person.role}
-                    </p>
+                    <h3 className="font-display text-xl text-foreground">{person.name}</h3>
+                    <p className="mt-0.5 text-sm font-medium text-terracotta">{person.role}</p>
                   </div>
                   {/* LinkedIn — matches footer social button pattern */}
                   <Link
@@ -80,24 +74,16 @@ export function Team() {
                     <Linkedin className="size-4" />
                   </Link>
                 </div>
-                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                  {person.bio}
-                </p>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{person.bio}</p>
               </div>
             </article>
           ))}
         </div>
 
-        {/* Quiet footer line instead of a second big CTA */}
-        <p className="mt-10 text-center text-sm text-muted-foreground">
-          Want to reach us?{" "}
-          <Link
-            href="/contact"
-            className="font-medium text-foreground underline-offset-4 hover:underline"
-          >
-            Get in touch
-          </Link>
-          .
+        {/* Office address — the page's only credibility signal */}
+        <p className="mt-10 flex items-center justify-center gap-1.5 text-[13px] text-muted-foreground">
+          <MapPin className="size-3.5 shrink-0" aria-hidden="true" />
+          216-B, Phase 5, DHA Lahore, Pakistan
         </p>
       </div>
     </section>
