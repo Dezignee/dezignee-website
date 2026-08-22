@@ -5,6 +5,7 @@ import { Braces, HeartHandshake, Sparkles, Target } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Hero } from "@/components/sections/hero"
+import { Team } from "@/components/sections/team"
 
 export const metadata: Metadata = {
   title: "About",
@@ -104,6 +105,8 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+
+      <Team />
 
       <section className="border-t bg-muted/10">
         <div className="container py-16 sm:py-20">
