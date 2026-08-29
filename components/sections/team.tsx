@@ -5,7 +5,7 @@ import { Linkedin, MapPin } from "lucide-react"
 const TEAM = [
   {
     name: "Muneeb-Ur-Rehman",
-    role: "Founder",
+    role: "Co-founder",
     bio: "Building Dezignee from the ground up — product, engineering, and everything in between. Obsessed with making AI-powered tooling that developers actually want to use.",
     photo: "/team/Muneeb.png",
     objectPosition: "center 18%",
@@ -13,7 +13,7 @@ const TEAM = [
   },
   {
     name: "Saleha Fahd",
-    role: "Marketing Manager",
+    role: "Co-founder",
     bio: "Shapes how Dezignee shows up in the world — from launch strategy to the words on this page. Focused on reaching the developers and teams who will get the most from the product.",
     photo: "/team/Saleha.png",
     objectPosition: "center 12%",
