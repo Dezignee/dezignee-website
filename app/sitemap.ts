@@ -1,7 +1,6 @@
 import type { MetadataRoute } from "next"
 
 import { absoluteUrl } from "@/lib/site"
-import { blogPosts } from "@/lib/blog"
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date()
@@ -12,7 +11,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/pricing",
     "/templates",
     "/docs",
-    "/blog",
     "/contact",
     "/about",
     "/privacy",
@@ -22,10 +20,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: now,
   }))
 
-  const postRoutes = blogPosts.map((post) => ({
-    url: absoluteUrl(`/blog/${post.slug}`),
-    lastModified: new Date(post.date),
-  }))
-
-  return [...staticRoutes, ...postRoutes]
+  return staticRoutes
 }

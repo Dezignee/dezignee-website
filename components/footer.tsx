@@ -11,7 +11,6 @@ const columns = [
       { href: "/features", label: "Features" },
       { href: "/pricing", label: "Pricing" },
       { href: "/templates", label: "Templates" },
-      { href: "/changelog", label: "Changelog" },
     ],
   },
   {
@@ -27,7 +26,6 @@ const columns = [
     title: "Company",
     links: [
       { href: "/about", label: "About" },
-      { href: "/blog", label: "Blog" },
       { href: "/contact", label: "Contact" },
     ],
   },
