@@ -9,11 +9,13 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 
+/**
+ * Plugin-first nav. Order encodes priority: the SDK comes before everything.
+ */
 const navItems = [
-  { href: "/features", label: "Features" },
-  { href: "/pricing", label: "Pricing" },
-  { href: "/templates", label: "Templates" },
+  { href: "/plugin", label: "Plugin" },
   { href: "/docs", label: "Docs" },
+  { href: "/pricing", label: "Pricing" },
   { href: "/contact", label: "Contact" },
 ] as const
 
@@ -56,7 +58,6 @@ export function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-background">
-      {/* Narrowed bar: content sits in an 80% / max-1040px centered rail. */}
       <div className="site-rail flex h-16 items-center justify-between gap-6">
         <BrandLockup />
 
@@ -83,13 +84,13 @@ export function Navbar() {
 
         <div className="hidden items-center gap-1.5 md:flex">
           <Link
-            href="/contact"
+            href="/plugin#quickstart"
             className="px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
           >
-            Sign in
+            Quickstart
           </Link>
           <Button asChild size="sm">
-            <Link href="/pricing">Start free</Link>
+            <Link href="/contact">Get an API key</Link>
           </Button>
         </div>
 
@@ -137,9 +138,15 @@ export function Navbar() {
                   </Link>
                 )
               })}
+              <Link
+                href="/plugin#quickstart"
+                className="rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+              >
+                Quickstart
+              </Link>
               <div className="pt-2">
                 <Button asChild className="w-full">
-                  <Link href="/pricing">Start free</Link>
+                  <Link href="/contact">Get an API key</Link>
                 </Button>
               </div>
             </nav>

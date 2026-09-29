@@ -53,6 +53,7 @@ const PLANS: Plan[] = [
       "Everything in Free",
       "Sequences (multi-step campaigns)",
       "Asset library & version history",
+      "Embed the editor (plugin SDK) — production, unlimited domains",
       "API access & webhooks",
       "Email support",
     ],
@@ -69,7 +70,8 @@ const PLANS: Plan[] = [
     blurb: "For teams scaling lifecycle and embedded flows.",
     features: [
       "Everything in Pro",
-      "MCP servers (Cursor, VS Code, Claude)",
+      "Both MCP servers (setup + design)",
+      "Custom asset storage (your own bucket)",
       "Multiple workspaces",
       "Lower overage rate",
       "Priority support",

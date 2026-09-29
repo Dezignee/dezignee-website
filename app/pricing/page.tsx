@@ -11,13 +11,24 @@ import { PricingPlans } from "@/components/sections/pricing-plans"
 export const metadata: Metadata = {
   title: "Pricing",
   description:
-    "Start free with 50 credits a day. Paid plans from $99/mo meter AI usage in credits and never block you — overage is simple pay-as-you-go.",
+    "Every paid plan can embed the editor — no platform tier, no add-on. Start free with 50 credits a day, or pick a plan from $99/mo that meters AI usage in credits and never blocks you.",
   alternates: { canonical: "/pricing" },
 }
 
 /* comparison rows — cell value: true | false | string */
 type Row = { label: string; free: boolean | string; pro: boolean | string; growth: boolean | string; business: boolean | string }
 const GROUPS: { title: string; rows: Row[] }[] = [
+  {
+    title: "Embed & developers",
+    rows: [
+      { label: "Embed the editor (plugin SDK)", free: false, pro: true, growth: true, business: true },
+      { label: "API access & webhooks", free: false, pro: true, growth: true, business: true },
+      { label: "MCP servers", free: false, pro: false, growth: true, business: true },
+      { label: "Custom asset storage (your own bucket)", free: false, pro: false, growth: true, business: true },
+      { label: "Workspaces", free: "1", pro: "1", growth: "Multiple", business: "Multiple" },
+      { label: "Audit log & governance", free: false, pro: false, growth: false, business: true },
+    ],
+  },
   {
     title: "AI & credits",
     rows: [
@@ -35,15 +46,6 @@ const GROUPS: { title: string; rows: Row[] }[] = [
       { label: "Email-safe HTML export", free: true, pro: true, growth: true, business: true },
       { label: "Sequences (multi-step)", free: false, pro: true, growth: true, business: true },
       { label: "Asset library & version history", free: false, pro: true, growth: true, business: true },
-    ],
-  },
-  {
-    title: "Developers & teams",
-    rows: [
-      { label: "API access & webhooks", free: false, pro: true, growth: true, business: true },
-      { label: "MCP servers", free: false, pro: false, growth: true, business: true },
-      { label: "Workspaces", free: "1", pro: "1", growth: "Multiple", business: "Multiple" },
-      { label: "Audit log & governance", free: false, pro: false, growth: false, business: true },
       { label: "Support", free: "Community", pro: "Email", growth: "Priority", business: "Dedicated" },
     ],
   },
@@ -51,8 +53,20 @@ const GROUPS: { title: string; rows: Row[] }[] = [
 
 const FAQ = [
   {
+    q: "Can I embed the editor in my product?",
+    a: "Yes, on Pro and above — there's no separate embed add-on or platform tier. The plugin SDK mounts the full editor in your app; see the plugin reference for the quickstart.",
+  },
+  {
+    q: "Do my end users need Dezignee accounts?",
+    a: "No. Your backend mints a short-lived session token per user from your API key, so your users stay behind your own login and never see a Dezignee sign-in.",
+  },
+  {
+    q: "Who pays for AI credits my embed's end users spend?",
+    a: "You do — credits are billed to your workspace regardless of which end user triggered the edit, so you can bundle usage into your own pricing however you like.",
+  },
+  {
     q: "What's a credit?",
-    a: "Credits meter AI usage — chat drafting, suggestions, and image generation. Routine manual editing in the block editor doesn't spend credits.",
+    a: "Credits meter AI usage — chat drafting, suggestions, and image generation, including edits made inside an embed. Routine manual editing in the block editor doesn't spend credits.",
   },
   {
     q: "What happens when I run out?",
@@ -65,10 +79,6 @@ const FAQ = [
   {
     q: "Can I bring my own OpenAI key?",
     a: "Yes, on Business. Connect your own key so AI generation runs on your account instead of metered Dezignee credits.",
-  },
-  {
-    q: "Can I embed the editor in my product?",
-    a: "Yes. The plugin SDK and MCP servers are available on paid plans — see the developer docs for the integration tracks.",
   },
   {
     q: "Do I need a credit card to start?",
@@ -87,14 +97,30 @@ export default function PricingPage() {
     <>
       <PageHeader
         eyebrow="Pricing"
-        title={<>Start free. Scale by credits.</>}
-        description="AI usage is metered in credits — and paid plans never block you. Pick a tier, switch to annual to save, and top up with buckets any time."
+        title={<>Every paid plan can embed the editor.</>}
+        description="No platform tier, no embed add-on — Pro and above include the plugin SDK. AI usage is metered in credits and paid plans never block you; switch to annual to save, and top up with buckets any time."
       />
 
       {/* plans */}
       <section className="border-b border-border">
         <div className="site-rail py-16">
           <PricingPlans />
+
+          <div className="mt-6 rounded-lg border border-border bg-card p-6 shadow-sm">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <p className="text-sm font-semibold text-foreground">How credits work when you embed</p>
+                <p className="mt-1.5 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+                  AI credits are consumed by drafting and edits — including edits your{" "}
+                  <b className="text-foreground">end users</b> make inside the embed. They're billed to
+                  your workspace, not theirs, so you can bundle usage into your own pricing however you like.
+                </p>
+              </div>
+              <Button asChild variant="outline">
+                <Link href="/contact">Estimate my usage</Link>
+              </Button>
+            </div>
+          </div>
         </div>
       </section>
 

@@ -53,13 +53,14 @@ export default function AboutPage() {
               Email creation shouldn't be a trade-off.
             </h2>
             <p className="mt-5 text-pretty text-[17px] leading-relaxed text-foreground/80">
-              Traditional email builders are either powerful but slow, or fast but rigid. Dezignee blends
-              chat-first generation with a block editor so you can iterate quickly — and ship HTML you can
-              actually rely on.
+              If you're a platform or plugin team, you should be able to embed a premium email editor
+              without building and maintaining it for years. That's the whole thesis — great email
+              creation, ready to mount inside whatever you're already building.
             </p>
             <p className="mt-4 text-pretty text-[17px] leading-relaxed text-foreground/80">
-              We also care deeply about developer experience. If you're a platform team, you should be able
-              to embed a premium email editor without building and maintaining one for years.
+              It also has to be good on its own terms. Traditional email builders are either powerful
+              but slow, or fast but rigid. Dezignee blends chat-first generation with a block editor so
+              you can iterate quickly — and ship HTML you can actually rely on.
             </p>
           </div>
         </div>

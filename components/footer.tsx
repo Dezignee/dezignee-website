@@ -4,22 +4,26 @@ import { Github, Twitter } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { BrandLockup } from "@/components/navbar"
 
+/**
+ * Developer columns come first — a plugin-first site puts the SDK above the product.
+ * Every href below must resolve.
+ */
 const columns = [
-  {
-    title: "Product",
-    links: [
-      { href: "/features", label: "Features" },
-      { href: "/pricing", label: "Pricing" },
-      { href: "/templates", label: "Templates" },
-    ],
-  },
   {
     title: "Developers",
     links: [
+      { href: "/plugin", label: "Plugin SDK" },
+      { href: "/plugin#quickstart", label: "Quickstart" },
+      { href: "/plugin#reference", label: "API reference" },
+      { href: "/docs#mcp", label: "MCP servers" },
+    ],
+  },
+  {
+    title: "Product",
+    links: [
+      { href: "/features", label: "What's in the editor" },
+      { href: "/pricing", label: "Pricing" },
       { href: "/docs", label: "Docs" },
-      { href: "/docs/mcp", label: "MCP servers" },
-      { href: "/docs/sdk", label: "SDK" },
-      { href: "/docs/api", label: "API reference" },
     ],
   },
   {
@@ -46,8 +50,8 @@ export function Footer({ className }: { className?: string }) {
           <div className="max-w-xs space-y-4">
             <BrandLockup />
             <p className="text-sm leading-relaxed text-muted-foreground">
-              The MCP-native email editor. Draft with AI, refine by hand, and
-              export email-safe HTML — or embed the whole workflow in your product.
+              The email editor you embed. AI drafting, a real block editor, and email-safe
+              HTML — inside your product, under your brand.
             </p>
             <div className="flex items-center gap-2.5 pt-1">
               <a

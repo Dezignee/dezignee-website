@@ -7,6 +7,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const staticRoutes = [
     "/",
+    "/plugin",
     "/features",
     "/pricing",
     "/templates",
@@ -18,6 +19,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ].map((path) => ({
     url: absoluteUrl(path),
     lastModified: now,
+    ...(path === "/plugin" ? { changeFrequency: "weekly" as const, priority: 0.9 } : {}),
   }))
 
   return staticRoutes

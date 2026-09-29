@@ -311,6 +311,10 @@ const sections: LegalSection[] = [
     body: (
       <>
         <p>We retain account information and Workspace Content for as long as reasonably necessary to provide the Service and maintain your account.</p>
+        <p>
+          Version history for Workspace Content is retained on a rolling basis: the last 200 drafts per
+          document, all published versions, and all named snapshots.
+        </p>
         <p>You may be able to delete certain content through the Service or request deletion of your account.</p>
         <p>
           Following account deletion, certain information may remain for a limited period in backups, logs, security

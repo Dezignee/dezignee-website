@@ -9,12 +9,47 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 
+/**
+ * Intent routing matters more now: /contact is the CTA on the homepage, the
+ * plugin page, and pricing. A single undifferentiated inbox loses the
+ * evaluating engineer among support requests.
+ *
+ * `intent` should drive routing when this is wired to a real backend:
+ *   evaluating | pricing | support | partnership | other
+ */
+type Intent = "evaluating" | "pricing" | "support" | "partnership" | "other"
+
 type ContactValues = {
   name: string
   email: string
-  useCase: "dashboard" | "embedding" | "mcp" | "other"
+  company: string
+  intent: Intent
   message: string
 }
+
+const intents: { value: Intent; label: string; hint: string }[] = [
+  {
+    value: "evaluating",
+    label: "Evaluating the plugin",
+    hint: "Tell us your stack and where the editor would live. We'll reply with a working config.",
+  },
+  {
+    value: "pricing",
+    label: "Pricing for my volume",
+    hint: "Roughly how many end users and emails per month? We'll size the plan.",
+  },
+  {
+    value: "support",
+    label: "Technical support",
+    hint: "Include your workspace id and what you expected to happen.",
+  },
+  {
+    value: "partnership",
+    label: "Partnership or reseller",
+    hint: "What's the shape of the partnership you have in mind?",
+  },
+  { value: "other", label: "Something else", hint: "" },
+]
 
 function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms))
@@ -25,15 +60,19 @@ export function ContactForm() {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors, isSubmitting },
     reset,
   } = useForm<ContactValues>({
-    defaultValues: { useCase: "dashboard" },
+    defaultValues: { intent: "evaluating" },
   })
+
+  const intent = watch("intent")
+  const hint = intents.find((i) => i.value === intent)?.hint ?? ""
 
   const onSubmit = async (values: ContactValues) => {
     setSubmitted(false)
-    // TODO: wire to your API route / CRM. Front-end only for now.
+    // TODO: route by values.intent — evaluating/pricing → sales, support → support inbox.
     await sleep(650)
     setSubmitted(true)
     reset({ ...values, message: "" })
@@ -58,6 +97,28 @@ export function ContactForm() {
 
   return (
     <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
+      {/* Intent first: it changes what we ask for next */}
+      <fieldset className="space-y-2">
+        <legend className="text-sm font-medium leading-none text-foreground">What's this about?</legend>
+        <div className="grid gap-2 sm:grid-cols-2">
+          {intents.map((i) => (
+            <label
+              key={i.value}
+              className="flex cursor-pointer items-center gap-2.5 rounded-md border border-border bg-background px-3 py-2.5 text-sm transition-colors hover:bg-accent/40 has-[:checked]:border-terracotta has-[:checked]:bg-terracotta-tint/40"
+            >
+              <input
+                type="radio"
+                value={i.value}
+                className="size-4 accent-[hsl(var(--terracotta))]"
+                {...register("intent", { required: true })}
+              />
+              {i.label}
+            </label>
+          ))}
+        </div>
+        {hint ? <p className="text-xs text-muted-foreground">{hint}</p> : null}
+      </fieldset>
+
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="space-y-2">
           <Label htmlFor="name">Name</Label>
@@ -87,17 +148,10 @@ export function ContactForm() {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="useCase">What brings you here?</Label>
-        <select
-          id="useCase"
-          className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-          {...register("useCase", { required: true })}
-        >
-          <option value="dashboard">Using the dashboard editor</option>
-          <option value="embedding">Embedding the editor (SDK)</option>
-          <option value="mcp">MCP / agent automation</option>
-          <option value="other">Something else</option>
-        </select>
+        <Label htmlFor="company">
+          Company <span className="font-normal text-muted-foreground">(or the product you're building)</span>
+        </Label>
+        <Input id="company" placeholder="Acme" {...register("company")} />
       </div>
 
       <div className="space-y-2">
@@ -105,7 +159,7 @@ export function ContactForm() {
         <Textarea
           id="message"
           rows={5}
-          placeholder="Tell us what you’re building, rough volume, and your timeline…"
+          placeholder="Where the editor would live, your framework, and your timeline…"
           {...register("message", {
             required: "Please include a short message.",
             minLength: { value: 10, message: "A little more detail, please." },
@@ -126,7 +180,7 @@ export function ContactForm() {
         )}
       </Button>
       <p className="text-center text-xs text-muted-foreground">
-        We’ll only use your details to reply. No newsletters.
+        We'll only use your details to reply. No newsletters.
       </p>
     </form>
   )

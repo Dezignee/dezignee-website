@@ -11,6 +11,7 @@ import {
   LayoutPanelTop,
   Minus,
   MousePointerSquareDashed,
+  Puzzle,
   Sparkles,
   SquareStack,
   Type,
@@ -69,6 +70,7 @@ function Split({
   bullets,
   media,
   inverted = false,
+  cta,
 }: {
   id: string
   icon: React.ElementType
@@ -78,6 +80,7 @@ function Split({
   bullets: string[]
   media: React.ReactNode
   inverted?: boolean
+  cta?: { href: string; label: string }
 }) {
   return (
     <section id={id} className="scroll-mt-20 border-t border-border">
@@ -97,6 +100,15 @@ function Split({
               </li>
             ))}
           </ul>
+          {cta ? (
+            <Link
+              href={cta.href}
+              className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-terracotta hover:underline"
+            >
+              {cta.label}
+              <ArrowRight className="size-3.5" aria-hidden="true" />
+            </Link>
+          ) : null}
         </div>
         <Reveal className={inverted ? "lg:order-1" : ""} delay={0.05}>
           {media}
@@ -133,8 +145,19 @@ const BLOCK_TYPES = [
 const ALSO = [
   { icon: ImageIcon, t: "Asset library", d: "Upload to Dezignee-hosted storage or wire your own S3 bucket via an asset adapter." },
   { icon: GitBranch, t: "Version history", d: "Every command is versioned. Roll back a template or compare against an earlier draft." },
-  { icon: Boxes, t: "Workspaces", d: "Multi-tenant by design — separate brands, teams, and API keys per workspace." },
-  { icon: Webhook, t: "Webhooks", d: "HMAC-signed events for exports and changes, so your pipeline stays in sync." },
+]
+
+const MULTI_TENANT = [
+  {
+    icon: Boxes,
+    t: "Workspaces",
+    d: "workspaceId is the isolation boundary, enforced at the API level. One per customer, and a session token cannot reach across them.",
+  },
+  {
+    icon: Webhook,
+    t: "Webhooks + audit events",
+    d: "Know when a document changes without polling; audit events for your own compliance review.",
+  },
 ]
 
 export default function FeaturesPage() {
@@ -150,6 +173,7 @@ export default function FeaturesPage() {
         ]}
         anchors={[
           { href: "#ai", label: "AI & sequences" },
+          { href: "#embed", label: "Embed" },
           { href: "#editor", label: "Block editor" },
           { href: "#merge", label: "Merge tags" },
           { href: "#export", label: "Email-safe export" },
@@ -183,6 +207,37 @@ export default function FeaturesPage() {
               </div>
             </div>
           </MockFrame>
+        }
+      />
+
+      {/* Embed — end-user capability #2: an editor you mount */}
+      <Split
+        id="embed"
+        icon={Puzzle}
+        eyebrow="Embed"
+        title="An editor you mount, not a tool you visit"
+        body="The same editor your users would get in a dashboard, living inside your product: your branding via CSS variable overrides, your storage via upload callbacks, your login via session tokens. Ten lines, one div, no iframe plumbing of your own."
+        bullets={[
+          "Your branding — CSS variable overrides, runtime theme switching.",
+          "Your storage — upload / delete / list callbacks route to your own bucket.",
+          "Your auth — short-lived session tokens minted by your backend.",
+        ]}
+        cta={{ href: "/plugin", label: "Plugin reference" }}
+        media={
+          <CodeBlock
+            title="editor.ts"
+            snippets={{
+              label: "init",
+              language: "ts",
+              code: `import { init } from "dezignee-plugin"
+
+const editor = await init({
+  id: "editor",
+  sessionToken,
+  chatEnabled: true,
+})`,
+            }}
+          />
         }
       />
 
@@ -285,11 +340,34 @@ export default function FeaturesPage() {
         }
       />
 
+      {/* Built for multi-tenant products — promoted out of the footnote */}
+      <section className="border-t border-border">
+        <div className="site-rail py-20">
+          <SectionHeading
+            eyebrow="For platforms"
+            title="Built for multi-tenant products."
+            description="The single most important fact for a platform embedding this for many customers: tenancy is enforced at the API level, and you can stay in sync without polling."
+          />
+          <div className="mx-auto mt-12 grid max-w-3xl gap-5 sm:grid-cols-2">
+            {MULTI_TENANT.map((a) => {
+              const Icon = a.icon
+              return (
+                <div key={a.t} className="rounded-lg border border-border bg-card p-6">
+                  <Icon className="size-5 text-terracotta" />
+                  <h3 className="mt-4 text-[15px] font-semibold text-foreground">{a.t}</h3>
+                  <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{a.d}</p>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      </section>
+
       {/* Also included */}
       <section className="border-t border-border">
         <div className="site-rail py-20">
           <SectionHeading eyebrow="Also included" title="The rest of the toolkit." />
-          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mx-auto mt-12 grid max-w-3xl gap-5 sm:grid-cols-2">
             {ALSO.map((a) => {
               const Icon = a.icon
               return (
